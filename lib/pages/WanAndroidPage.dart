@@ -36,7 +36,7 @@ class _WanAndroidDemoState extends State<WanAndroidDemo>
   @override
   void initState() {
     super.initState();
-    
+
     _navigationViews = <BottomNavigationBarItem>[
       new BottomNavigationBarItem(
         icon: const Icon(Icons.home),
