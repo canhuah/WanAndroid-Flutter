@@ -113,6 +113,7 @@ class CollectListPageState extends State<CollectListPage> {
     return null;
   }
 
+  //还是建议把Item单独抽出来,可以复用.参考 lib/item/ArticleItem.dart
   Widget buildItem(int i) {
     var itemData = listData[i];
 

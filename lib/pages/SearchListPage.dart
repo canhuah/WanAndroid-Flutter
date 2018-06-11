@@ -14,6 +14,8 @@ import 'package:wanAndroid/widget/EndLine.dart';
 class SearchListPage extends StatefulWidget {
   String id;
 
+  //这里为什么用含有key的这个构造,大家可以试一下不带key 直接SearchListPage(this.id) ,看看会有什么bug;
+
   SearchListPage(ValueKey<String> key) : super(key: key) {
     this.id = key.value.toString();
   }
