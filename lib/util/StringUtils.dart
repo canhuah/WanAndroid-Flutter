@@ -3,7 +3,7 @@ import 'package:wanAndroid/constant/colors.dart';
 
 class StringUtils {
   // 保存用户登录信息，data中包含了token等信息
-  static TextSpan getTexttt(String text, String key) {
+  static TextSpan getTextSpan(String text, String key) {
     if (text == null || key == null) {
       return null;
     }

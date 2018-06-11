@@ -6,6 +6,8 @@ import 'package:wanAndroid/pages/LoginPage.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
 import 'package:wanAndroid/util/StringUtils.dart';
 
+
+///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
 class ArticleItem extends StatefulWidget {
   var itemData;
 
@@ -14,7 +16,10 @@ class ArticleItem extends StatefulWidget {
   //搜索列表的id
   String id;
 
-  ArticleItem(this.itemData);
+  ArticleItem(var itemData){
+    this.itemData = itemData;
+    this.isSearch =false;
+  }
 
   //命名构造函数,搜索列表的item和普通的item有些不一样
   ArticleItem.isFromSearch(var itemData, String id) {
@@ -97,8 +102,8 @@ class ArticleItemState extends State<ArticleItem> {
         new Expanded(
           child: new Text.rich(
             widget.isSearch
-                ? StringUtils.getTexttt(widget.itemData['title'], widget.id)
-                : widget.itemData['title'],
+                ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
+                : new TextSpan(text: widget.itemData['title']),
             softWrap: true,
             style: new TextStyle(fontSize: 16.0, color: Colors.black),
             textAlign: TextAlign.left,

@@ -18,8 +18,8 @@ class HotPageState extends State<HotPage> {
   @override
   void initState() {
     super.initState();
-    getFriend();
-    getHotKey();
+    _getFriend();
+    _getHotKey();
   }
 
   @override
@@ -42,6 +42,7 @@ class HotPageState extends State<HotPage> {
                 style: new TextStyle(color: Colors.blue, fontSize: 20.0))
         ),
         new Wrap(
+          spacing: 5.0,
           runSpacing: 5.0,
           children: friendWidgets,
         ),
@@ -50,7 +51,7 @@ class HotPageState extends State<HotPage> {
   }
 
 
-  void getFriend() {
+  void _getFriend() {
     HttpUtil.get(Api.FRIEND, (data) {
       setState(() {
         List datas = data;
@@ -77,7 +78,7 @@ class HotPageState extends State<HotPage> {
     });
   }
 
-  void getHotKey() {
+  void _getHotKey() {
     HttpUtil.get(Api.HOTKEY, (data) {
       setState(() {
         List datas = data;

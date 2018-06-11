@@ -219,6 +219,7 @@ class CollectListPageState extends State<CollectListPage> {
     }));
   }
 
+
   //取消收藏
   void _itemUnCollect(var itemData) {
     String url;

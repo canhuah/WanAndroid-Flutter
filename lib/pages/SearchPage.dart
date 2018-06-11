@@ -6,15 +6,12 @@ class SearchPage extends StatefulWidget {
 
   String searchStr;
 
-
   SearchPage(this.searchStr);
 
   @override
   State<StatefulWidget> createState() {
     return new SearchPageState(searchStr);
   }
-
-
 }
 
 class SearchPageState extends State<SearchPage> {
@@ -24,14 +21,11 @@ class SearchPageState extends State<SearchPage> {
   String searchStr ;
   SearchPageState(this.searchStr);
 
-
   @override
   void initState() {
     super.initState();
 
     _searchController = new TextEditingController(text: searchStr);
-
-
     changeContent();
   }
 
