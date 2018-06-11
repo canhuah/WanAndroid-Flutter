@@ -5,26 +5,33 @@
 谷歌在今年的I/O大会提了Flutter，觉得有可能是一个趋势。 在学习了基本的Dart语法以及Flutter常用Widget的基本使用之后就开始慢慢按捺不住了，决定模仿[Flutter版的开源中国](https://github.com/yubo725/FlutterOSC)写一个WanAndroid客户端。
 
 
+## 项目地址
 
+[**github地址** ](https://github.com/canhuah/WanAndroid)
+
+喜欢的话可以给个星鼓励一下，也可以进 项目/android/apk-release.apk直接下载Release版本体验一下流畅度
+
+<!--more-->
 ##  项目截图
 
-<figure >
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b7772d26e5?w=720&h=1440&f=webp&s=52674">
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b777504412?w=720&h=1440&f=webp&s=47836">
-</figure>
 
-<figure >
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b777c320c4?w=720&h=1440&f=webp&s=56656">
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b777dbe402?w=720&h=1440&f=webp&s=71972">
-</figure>
-<figure >
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b7788f07f6?w=720&h=1440&f=webp&s=92310">
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b778c2e995?w=720&h=1440&f=webp&s=51874">
-</figure>
-<figure >
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b7ad8c2f78?w=720&h=1440&f=webp&s=45452">
-    <img src="https://user-gold-cdn.xitu.io/2018/6/11/163ee3b7b8092343?w=720&h=1440&f=webp&s=16798">
-</figure>
+![首页](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp)
+
+
+
+![发行](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_find.webp)
+
+![体系](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_tree.webp)
+
+![详情](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_webdetail.webp)
+
+![热门](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_hot.webp)
+
+![搜索](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_search.webp)
+
+![收藏](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_collect.webp)
+
+![关于](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_about.webp)
 
 
 ## 项目地址
@@ -33,12 +40,30 @@
 
 喜欢的话可以给个星鼓励一下，也可以进 项目/android/apk-release.apk直接下载Release版本体验一下流畅度
 
-## 项目中学到的东西
+## 知识点
 
-- Dart基础
-- 各种简单 Widget的基本使用
-- Flutter网络请求之简单封装及cookie的添加
+- WanAndroidPage.dart
+  -  BottomNavigationBar的基本使用
+  -  Navigator的简单使用
+- HomePageList.dart
+  - 上拉加载更多
+  - 添加头布局(SlideView)
+- HotePage.dart
+  - 热门和搜索列表的切换
+- ArticlePage.dart
+  - TabBarView的基本使用
+- ArticleDetailPage.dart
+  - 插件flutter_webview_plugin的使用
+- SearchPage.dart
+  - Widget构造函数中key的意义
+- ArticleItem.dart
+  - Dart的普通构造及命名构造函数
+- HttpUtil.dart
+  - [Flutter网络请求之简单封](http://www.canhuah.com/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85.html)及cookie的添加
 
+
+
+可以看到整个项目相对还是非常简单的
 
 ##  项目中碰到并解决的问题
 
