@@ -1,12 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/bean/Banner.dart';
+import 'package:wanAndroid/constant/Constants.dart';
+import 'package:wanAndroid/event/LoginEvent.dart';
 
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtil.dart';
-import 'package:dio/dio.dart';
+import 'package:wanAndroid/pages/AboutUsPage.dart';
+import 'package:wanAndroid/pages/CollectListPage.dart';
+import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/util/DataUtils.dart';
+
 class MyInfoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -14,39 +15,113 @@ class MyInfoPage extends StatefulWidget {
   }
 }
 
-class MyInfoPageState extends State<MyInfoPage> {
-  var userName;
-
-  getBanner() async {
-//   Response res = await HttpUtil.get(Api.BANNER);
-   HttpUtil.get(Api.BANNER, (data){
-     List banners = data;
-
-     for(var i=0;i<banners.length;i++){
-
-       print(banners[i]);
-     }
-
-   });
-
-
-
-  }
+class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
+  String userName;
 
   @override
   void initState() {
     super.initState();
-//    getBanner();
+
+    _getName();
+
+    Constants.eventBus.on(LoginEvent).listen((event) {
+      _getName();
+    });
+  }
+
+  void _getName() async {
+    DataUtils.getUserName().then((username) {
+      setState(() {
+        userName = username;
+        print('name:' + userName.toString());
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: new MaterialButton(
-          child: new Text(userName == null ? "a" : userName),
-//          onPressed: getBanner
+    Widget image = new Image.asset(
+      'images/ic_launcher_round.png',
+      width: 100.0,
+      height: 100.0,
+    );
+
+    Widget raisedButton = new RaisedButton(
+      child: new Text(
+        userName == null ? "请登录" : userName,
+        style: new TextStyle(color: Colors.white),
       ),
+      color: Colors.blue,
+      onPressed: () async {
+        //登录
+
+        await DataUtils.isLogin().then((isLogin) {
+          if (!isLogin) {
+            Navigator
+                .of(context)
+                .push(new MaterialPageRoute(builder: (context) {
+              return new LoginPage();
+            }));
+          } else {
+            print('已登录!');
+          }
+        });
+      },
+    );
+
+    Widget listLike = new ListTile(
+        leading: const Icon(Icons.favorite),
+        title: const Text('喜欢的文章'),
+        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        onTap: () async {
+          await DataUtils.isLogin().then((isLogin) {
+            if (isLogin) {
+              Navigator
+                  .of(context)
+                  .push(new MaterialPageRoute(builder: (context) {
+                return new CollectPage();
+              }));
+            } else {
+              print('已登录!');
+              Navigator
+                  .of(context)
+                  .push(new MaterialPageRoute(builder: (context) {
+                return new LoginPage();
+              }));
+            }
+          });
+        });
+
+    Widget listAbout = new ListTile(
+        leading: const Icon(Icons.info),
+        title: const Text('关于我们'),
+        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        onTap: () {
+          Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+            return new AboutUsPage();
+          }));
+        });
+
+    Widget listLogout = new ListTile(
+        leading: const Icon(Icons.info),
+        title: const Text('退出登录'),
+        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        onTap: () async {
+          DataUtils.clearLoginInfo();
+          setState(() {
+            userName = null;
+          });
+        });
+
+    return new ListView(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+      children: <Widget>[
+        image,
+        raisedButton,
+        listLike,
+        listAbout,
+        listLogout,
+      ],
     );
   }
 }
-

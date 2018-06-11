@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wanAndroid/pages/ArticleDetailPage.dart';
 
 class SlideView extends StatefulWidget {
   var data;
 
-  SlideView(data) {
-    this.data = data;
-  }
+  SlideView(this.data);
 
   @override
   State<StatefulWidget> createState() {
@@ -16,17 +15,15 @@ class SlideView extends StatefulWidget {
 class SlideViewState extends State<SlideView>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-  List slideData;
+  List data;
 
-  SlideViewState(data) {
-    slideData = data;
-  }
+  SlideViewState(this.data);
 
   @override
   void initState() {
     super.initState();
-    tabController = new TabController(
-        length: slideData == null ? 0 : slideData.length, vsync: this);
+    tabController =
+        new TabController(length: data == null ? 0 : data.length, vsync: this);
   }
 
   @override
@@ -38,22 +35,18 @@ class SlideViewState extends State<SlideView>
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    if (slideData != null && slideData.length > 0) {
-      for (var i = 0; i < slideData.length; i++) {
-        var item = slideData[i];
+    if (data != null && data.length > 0) {
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i];
         var imgUrl = item['imagePath'];
         var title = item['title'];
-        var detailUrl = item['url'];
+        item['link'] = item['url'];
         items.add(new GestureDetector(
             onTap: () {
-              // 点击跳转到详情
-              //todo
-//            Navigator.of(context).push(new MaterialPageRoute(
-//                builder: (ctx) => new NewsDetailPage(id: detailUrl)
-//            ));
+              _handOnItemClick(item);
             },
             child: AspectRatio(
-              aspectRatio: 3.0 / 1.5,
+              aspectRatio: 2.0 / 1.0,
               child: new Stack(
                 children: <Widget>[
                   new Image.network(
@@ -81,5 +74,11 @@ class SlideViewState extends State<SlideView>
       controller: tabController,
       children: items,
     );
+  }
+
+  void _handOnItemClick(itemData) {
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new ArticleDetailPage(title:itemData['title'],url: itemData['link']);
+    }));
   }
 }

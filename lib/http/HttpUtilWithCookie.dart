@@ -18,7 +18,8 @@ import 'package:wanAndroid/http/Api.dart';
 //  static const String BaseUrl = "http://www.wanandroid.com/";
 //}
 
-//这里只封装了常见的get和post请求类型,不带Cookie
+//这里只封装了常见的get和post请求类型,带Cookie但是有些不优雅,
+//可以自己根据HttpUitl.dart去封装,cookie信息在res.headers['set-cookie']中,添加的时候是headerMap['Cookie']
 class HttpUtil {
   static const String GET = "get";
   static const String POST = "post";
@@ -26,8 +27,8 @@ class HttpUtil {
 
   static void get(String url, Function callback,
       {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
+      Map<String, String> headers,
+      Function errorCallback}) async {
     //偷懒..
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
@@ -50,8 +51,8 @@ class HttpUtil {
 
   static void post(String url, Function callback,
       {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
+      Map<String, String> headers,
+      Function errorCallback}) async {
     if (!url.startsWith("http")) {
       url = Api.BaseUrl + url;
     }
@@ -62,15 +63,27 @@ class HttpUtil {
 
   static Future _request(String url, Function callback,
       {String method,
-        Map<String, String> headers,
-        Map<String, String> params,
-        Function errorCallback}) async {
+      Map<String, String> headers,
+      Map<String, String> params,
+      Function errorCallback}) async {
     String errorMsg;
     int errorCode;
     var data;
     try {
       Map<String, String> headerMap = headers == null ? new Map() : headers;
       Map<String, String> paramMap = params == null ? new Map() : params;
+
+
+
+
+      //统一添加cookie(写在这是不是也有些不优雅)
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      String cookie = sp.get("cookie");
+      if(cookie==null || cookie.length==0){
+      }else{
+        headerMap['Cookie'] = cookie;
+      }
+
 
 
       http.Response res;
@@ -97,6 +110,15 @@ class HttpUtil {
       errorCode = map['errorCode'];
       errorMsg = map['errorMsg'];
       data = map['data'];
+
+
+      //报存登录接口的cookie,写在这里有些不优雅(0-0)
+      if(url.contains(Api.LOGIN)){
+        SharedPreferences sp = await SharedPreferences.getInstance();
+        sp.setString("cookie", res.headers['set-cookie']);
+
+      }
+
 
 
       // callback返回data,数据类型为dynamic

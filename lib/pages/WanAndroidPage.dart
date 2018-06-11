@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wanAndroid/constant/colors.dart';
-import 'package:wanAndroid/pages/AboutUs.dart';
 import 'package:wanAndroid/pages/HomeListPage.dart';
-import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/pages/MyInfoPage.dart';
+import 'package:wanAndroid/pages/SearchPage.dart';
+import 'package:wanAndroid/pages/TreePage.dart';
 
-
-class WanAndroidDemo extends StatefulWidget {
+//主页
+class WanAndroidApp extends StatefulWidget {
   @override
   _WanAndroidDemoState createState() => new _WanAndroidDemoState();
 }
 
-class _WanAndroidDemoState extends State<WanAndroidDemo>
+class _WanAndroidDemoState extends State<WanAndroidApp>
     with TickerProviderStateMixin {
   int _tabIndex = 0;
-  BottomNavigationBarType _type = BottomNavigationBarType.fixed;
+
   List<BottomNavigationBarItem> _navigationViews;
 
   var appBarTitles = ['首页', '发现', '我的'];
@@ -24,11 +25,7 @@ class _WanAndroidDemoState extends State<WanAndroidDemo>
 
   initData() {
     _body = new IndexedStack(
-      children: <Widget>[
-        new HomeListPage(),
-        new LoginPage(),
-        new AboutUsPage()
-      ],
+      children: <Widget>[new HomeListPage(), new TreePage(), new MyInfoPage()],
       index: _tabIndex,
     );
   }
@@ -56,10 +53,13 @@ class _WanAndroidDemoState extends State<WanAndroidDemo>
     ];
   }
 
+  final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     initData();
     return new MaterialApp(
+      navigatorKey: navigatorKey,
       theme: new ThemeData(primaryColor: AppColors.colorPrimary),
       home: new Scaffold(
         appBar: new AppBar(
@@ -67,6 +67,21 @@ class _WanAndroidDemoState extends State<WanAndroidDemo>
             appBarTitles[_tabIndex],
             style: new TextStyle(color: Colors.white),
           ),
+          actions: <Widget>[
+            new IconButton(
+                icon: new Icon(Icons.search),
+                onPressed: () {
+//                为什么不直接Navigator.push(context,
+//                  new MaterialPageRoute(
+//                      builder: (context) => new SearchPage()))
+//                  https://stackoverflow.com/questions/50124355/flutter-navigator-not-working
+
+                  navigatorKey.currentState
+                      .push(new MaterialPageRoute(builder: (context) {
+                    return new SearchPage(null);
+                  }));
+                })
+          ],
         ),
         body: _body,
         bottomNavigationBar: new BottomNavigationBar(
@@ -74,7 +89,7 @@ class _WanAndroidDemoState extends State<WanAndroidDemo>
               .map((BottomNavigationBarItem navigationView) => navigationView)
               .toList(),
           currentIndex: _tabIndex,
-          type: _type,
+          type: BottomNavigationBarType.fixed,
           onTap: (index) {
             setState(() {
               _tabIndex = index;

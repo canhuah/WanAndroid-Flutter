@@ -5,89 +5,74 @@ import 'package:wanAndroid/constant/Constants.dart';
 import 'package:wanAndroid/http/Api.dart';
 import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
 import 'package:wanAndroid/item/ArticleItem.dart';
+import 'package:wanAndroid/pages/ArticleDetailPage.dart';
+import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/util/StringUtils.dart';
+import 'package:wanAndroid/util/DataUtils.dart';
 import 'package:wanAndroid/widget/EndLine.dart';
-import 'package:wanAndroid/widget/SlideView.dart';
 
-class HomeListPage extends StatefulWidget {
+class SearchListPage extends StatefulWidget {
+  String id;
+
+  SearchListPage(ValueKey<String> key) : super(key: key) {
+    this.id = key.value.toString();
+  }
+
+  SearchListPageState searchListPageState;
+
   @override
   State<StatefulWidget> createState() {
-    return new HomeListPageState();
+    return new SearchListPageState();
   }
 }
 
-class HomeListPageState extends State<HomeListPage> {
+class SearchListPageState extends State<SearchListPage> {
+  int curPage = 0;
+
+  Map<String, String> map = new Map();
   List listData = new List();
-  var bannerData;
-  var curPage = 0;
-  var listTotalSize = 0;
-
+  int listTotalSize = 0;
   ScrollController _contraller = new ScrollController();
-  TextStyle titleTextStyle = new TextStyle(fontSize: 15.0);
-  TextStyle subtitleTextStyle =
-      new TextStyle(color: Colors.blue, fontSize: 12.0);
 
-  HomeListPageState() {
+  @override
+  void initState() {
+    super.initState();
+
     _contraller.addListener(() {
       var maxScroll = _contraller.position.maxScrollExtent;
       var pixels = _contraller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
-        getHomeArticlelist();
+        _articleQuery();
       }
     });
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    getBanner();
-    getHomeArticlelist();
-  }
-
-  Future<Null> _pullToRefresh() async {
-    curPage = 0;
-    getBanner();
-    getHomeArticlelist();
-    return null;
+    _articleQuery();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (listData == null) {
+    if (listData == null || listData.isEmpty) {
       return new Center(
         child: new CircularProgressIndicator(),
       );
     } else {
       Widget listView = new ListView.builder(
-        itemCount: listData.length + 1,
+        itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
 
-      return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return new RefreshIndicator(child: listView, onRefresh: pullToRefresh);
     }
   }
 
-  SlideView _bannerView;
-
-  void getBanner() {
-    String bannerUrl = Api.BANNER;
-
-    HttpUtil.get(bannerUrl, (data) {
-      if (data != null) {
-        setState(() {
-          bannerData = data;
-          _bannerView = new SlideView(bannerData);
-        });
-      }
-    });
-  }
-
-  void getHomeArticlelist() {
-    String url = Api.ARTICLE_LIST;
+  void _articleQuery() {
+    String url = Api.ARTICLE_QUERY;
     url += "$curPage/json";
+    map['k'] = widget.id;
 
-    HttpUtil.get(url, (data) {
+    HttpUtil.post(url, (data) {
       if (data != null) {
         Map<String, dynamic> map = data;
 
@@ -105,29 +90,30 @@ class HomeListPageState extends State<HomeListPage> {
           list1.addAll(listData);
           list1.addAll(_listData);
           if (list1.length >= listTotalSize) {
+
             list1.add(Constants.END_LINE_TAG);
+
           }
           listData = list1;
         });
       }
-    });
+    }, params: map);
+  }
+
+  Future<Null> pullToRefresh() async {
+    curPage = 0;
+    _articleQuery();
+    return null;
   }
 
   Widget buildItem(int i) {
-    if (i == 0) {
-      return new Container(
-        height: 180.0,
-        child: _bannerView,
-      );
-    }
-    i -= 1;
-
     var itemData = listData[i];
 
-    if (itemData is String && itemData == Constants.END_LINE_TAG) {
+    if (i == listData.length - 1 &&
+        itemData.toString() == Constants.END_LINE_TAG) {
       return new EndLine();
     }
 
-    return new ArticleItem(itemData);
+    return new ArticleItem.isFromSearch(itemData, widget.id);
   }
 }
