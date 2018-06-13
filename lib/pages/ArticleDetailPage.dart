@@ -54,7 +54,7 @@ class ArticleDetailPageState extends State<ArticleDetailPage> {
                 ? new LinearProgressIndicator()
                 : new Divider(
                     height: 1.0,
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColor,
                   )),
       ),
       withZoom: false,

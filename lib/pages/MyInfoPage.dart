@@ -51,7 +51,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
         userName == null ? "请登录" : userName,
         style: new TextStyle(color: Colors.white),
       ),
-      color: Colors.blue,
+      color: Theme.of(context).accentColor,
       onPressed: () async {
         //登录
 
@@ -72,7 +72,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
     Widget listLike = new ListTile(
         leading: const Icon(Icons.favorite),
         title: const Text('喜欢的文章'),
-        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () async {
           await DataUtils.isLogin().then((isLogin) {
             if (isLogin) {
@@ -95,7 +95,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
     Widget listAbout = new ListTile(
         leading: const Icon(Icons.info),
         title: const Text('关于我们'),
-        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () {
           Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
             return new AboutUsPage();
@@ -105,7 +105,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
     Widget listLogout = new ListTile(
         leading: const Icon(Icons.info),
         title: const Text('退出登录'),
-        trailing: const Icon(Icons.chevron_right, color: Colors.blue),
+        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () async {
           DataUtils.clearLoginInfo();
           setState(() {

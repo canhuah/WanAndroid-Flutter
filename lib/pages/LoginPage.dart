@@ -33,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
       children: <Widget>[
         new Icon(
           Icons.account_circle,
-          color: Colors.blue,
+          color: Theme.of(context).accentColor,
           size: 80.0,
         ),
       ],
@@ -65,7 +65,7 @@ class LoginPageState extends State<LoginPage> {
               color: Colors.white,
             ),
           ),
-          color: Colors.blue,
+          color: Theme.of(context).accentColor,
           disabledColor: Colors.blue,
           textColor: Colors.white,
           onPressed: () {

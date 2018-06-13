@@ -29,7 +29,7 @@ class HotPageState extends State<HotPage> {
         new Padding(
             padding: EdgeInsets.all(10.0),
             child: new Text('大家都在搜',
-                style: new TextStyle(color: Colors.blue, fontSize: 20.0))
+                style: new TextStyle(color: Theme.of(context).accentColor, fontSize: 20.0))
         ),
         new Wrap(
           spacing: 5.0,
@@ -39,7 +39,7 @@ class HotPageState extends State<HotPage> {
         new Padding(
             padding: EdgeInsets.all(10.0),
             child: new Text('常用网站',
-                style: new TextStyle(color: Colors.blue, fontSize: 20.0))
+                style: new TextStyle(color: Theme.of(context).accentColor, fontSize: 20.0))
         ),
         new Wrap(
           spacing: 5.0,
@@ -58,7 +58,7 @@ class HotPageState extends State<HotPage> {
         friendWidgets.clear();
         for (var itemData in datas) {
           Widget actionChip = new ActionChip(
-              backgroundColor: Colors.blue,
+              backgroundColor: Theme.of(context).accentColor,
               label: new Text(
                 itemData['name'],
                 style: new TextStyle(color: Colors.white),
@@ -85,7 +85,7 @@ class HotPageState extends State<HotPage> {
         hotkeyWidgets.clear();
         for (var value in datas) {
           Widget actionChip = new ActionChip(
-              backgroundColor: Colors.blue,
+              backgroundColor: Theme.of(context).accentColor,
               label: new Text(
                 value['name'],
                 style: new TextStyle(color: Colors.white),

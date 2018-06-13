@@ -89,7 +89,7 @@ class ArticleItemState extends State<ArticleItem> {
             new Text('作者:  '),
             new Text(
               widget.itemData['author'],
-              style: new TextStyle(color: Colors.blue),
+              style: new TextStyle(color: Theme.of(context).accentColor),
             ),
           ],
         )),
@@ -119,7 +119,7 @@ class ArticleItemState extends State<ArticleItem> {
           child: new Text(
             widget.isSearch ? '' : widget.itemData['chapterName'],
             softWrap: true,
-            style: new TextStyle(color: Colors.blue),
+            style: new TextStyle(color: Theme.of(context).accentColor),
             textAlign: TextAlign.left,
           ),
         ),

@@ -14,31 +14,24 @@
 <!--more-->
 ##  项目截图
 
-
-![首页](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp)
-
-
-
-![发行](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_find.webp)
-
-![体系](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_tree.webp)
-
-![详情](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_webdetail.webp)
-
-![热门](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_hot.webp)
-
-![搜索](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_search.webp)
-
-![收藏](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_collect.webp)
-
-![关于](http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_about.webp)
+<div>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp' width=320>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_find.webp' width=320>
+</div>
+<div>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_tree.webp' width=320>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_webdetail.webp' width=320>
+</div>
+<div>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_hot.webp' width=320>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_search.webp' width=320>
+</div>
+<div>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_collect.webp' width=320>
+    <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_about.webp' width=320>
+</div>
 
 
-## 项目地址
-
-[**github地址** ](https://github.com/canhuah/WanAndroid)
-
-喜欢的话可以给个星鼓励一下，也可以进 项目/android/apk-release.apk直接下载Release版本体验一下流畅度
 
 ## 知识点
 
@@ -59,7 +52,7 @@
 - ArticleItem.dart
   - Dart的普通构造及命名构造函数
 - HttpUtil.dart
-  - [Flutter网络请求之简单封](http://www.canhuah.com/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85.html)及cookie的添加
+  - [Flutter网络请求之简单封装](http://www.canhuah.com/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85.html)及cookie的添加
 
 
 
@@ -76,9 +69,11 @@
 - 加载中、空数据、错误数据的界面的统一处理
 
 
-##  学习资料
+## 学习资料
 - 官方的 [Flutter官方地址](https://flutter.io/get-started/install/)
-- 国内翻译版本 [Flutter中文网](https://flutter.io/get-started/install/)
+- 国内翻译版本 [Flutter中文网](https://flutterchina.club/)
 - 阿里闲鱼技术微信公众号(搜索 '闲鱼技术')
 
 官方的Demo及各个Widget的效果在安装了Flutter SDK之后在  Flutter SDK安装目录/flutter/examples下，可以自己一一尝试。
+
+我的博客 [canhuah的博客](http://www.canhuah.com)

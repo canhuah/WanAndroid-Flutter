@@ -58,9 +58,13 @@ class _WanAndroidDemoState extends State<WanAndroidApp>
   @override
   Widget build(BuildContext context) {
     initData();
+
     return new MaterialApp(
       navigatorKey: navigatorKey,
-      theme: new ThemeData(primaryColor: AppColors.colorPrimary),
+      theme: new ThemeData(
+          primaryColor: AppColors.colorPrimary,
+          accentColor: Colors.blue
+      ),
       home: new Scaffold(
         appBar: new AppBar(
           title: new Text(

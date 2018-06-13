@@ -131,7 +131,7 @@ class CollectListPageState extends State<CollectListPage> {
             new Text('作者:  '),
             new Text(
               itemData['author'],
-              style: new TextStyle(color: Colors.blue),
+              style: new TextStyle(color: Theme.of(context).accentColor),
             ),
           ],
         )),

@@ -55,9 +55,9 @@ class ArticlesPageState extends State<ArticlesPage> with SingleTickerProviderSta
 
             isScrollable: true,
             controller: _tabContro,
-            labelColor: Colors.blue,
+            labelColor: Theme.of(context).accentColor,
             unselectedLabelColor: Colors.black,
-            indicatorColor: Colors.blue,
+            indicatorColor: Theme.of(context).accentColor,
             tabs: tabs,
           ),
           body: new TabBarView(
