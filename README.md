@@ -16,9 +16,6 @@
 
 
 <div>
-     <img src='./screenshot/flutter_wanandroid.gif'>
-</div>
-<div>
     <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp' width=320>
     <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_find.webp' width=320>
 </div>
