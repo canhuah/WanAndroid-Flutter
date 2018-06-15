@@ -14,7 +14,7 @@
 <!--more-->
 ##  项目截图
 
-![gif图](http://ohwdtc40j.bkt.clouddn.com/canhuah_wanandroid_gif.gif)
+![gif图](./screenshots/flutter_wanandroid.gif)
 
 <div>
     <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp' width=320>
