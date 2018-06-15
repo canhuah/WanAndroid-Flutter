@@ -14,6 +14,8 @@
 <!--more-->
 ##  项目截图
 
+![gif图](http://ohwdtc40j.bkt.clouddn.com/canhuah_wanandroid_gif.gif)
+
 <div>
     <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_home.webp' width=320>
     <img src='http://ohwdtc40j.bkt.clouddn.com/canhuah_flutter_wanandriod_find.webp' width=320>
@@ -60,14 +62,17 @@
 
 ##  项目中碰到并解决的问题
 
-- 这个问题比较多，会在下一篇博客中一一说明
+- 这个问题比较多，单独写了一篇博客
+
+  [Flutter实战之WanAndroid项目中碰到的问题](http://www.canhuah.com/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html)
+
 
 ## 待解决的问题
 
 - 键盘遮挡
 - 下拉刷新，上拉加载更多的统一封装
 - 加载中、空数据、错误数据的界面的统一处理
-
+- 简单动画的使用(正在学习..)
 
 ## 学习资料
 - 官方的 [Flutter官方地址](https://flutter.io/get-started/install/)

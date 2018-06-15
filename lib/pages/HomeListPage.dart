@@ -44,6 +44,13 @@ class HomeListPageState extends State<HomeListPage> {
     getHomeArticlelist();
   }
 
+  @override
+  void dispose() {
+    _contraller.dispose();
+    super.dispose();
+  }
+
+
   Future<Null> _pullToRefresh() async {
     curPage = 0;
     getBanner();

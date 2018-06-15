@@ -59,6 +59,13 @@ class CollectListPageState extends State<CollectListPage> {
   }
 
   @override
+  void dispose() {
+    _contraller.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     if (listData == null || listData.isEmpty) {
       return new Center(

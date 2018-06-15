@@ -9,6 +9,7 @@ import 'package:wanAndroid/widget/EndLine.dart';
 
 class ArticleListPage extends StatefulWidget {
   String id;
+
   ArticleListPage(this.id);
 
   @override
@@ -17,14 +18,19 @@ class ArticleListPage extends StatefulWidget {
   }
 }
 
-class ArticleListPageState extends State<ArticleListPage> {
+class ArticleListPageState extends State<ArticleListPage>
+    with AutomaticKeepAliveClientMixin {
+  //  with AutomaticKeepAliveClientMixin 并且get wantKeepAlive返回true,tab切换时,不会每次执行initState
+  //来自 https://www.jianshu.com/p/edb741ab5997
+  @override
+  bool get wantKeepAlive => true;
+
   int curPage = 0;
 
   Map<String, String> map = new Map();
   List listData = new List();
   int listTotalSize = 0;
   ScrollController _contraller = new ScrollController();
-
 
   @override
   void initState() {
@@ -42,6 +48,13 @@ class ArticleListPageState extends State<ArticleListPage> {
     });
   }
 
+//  bool isDisposed = false;
+
+  @override
+  void dispose() {
+    _contraller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +64,7 @@ class ArticleListPageState extends State<ArticleListPage> {
       );
     } else {
       Widget listView = new ListView.builder(
-        itemCount: listData.length ,
+        itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
@@ -72,6 +85,10 @@ class ArticleListPageState extends State<ArticleListPage> {
 
         listTotalSize = map["total"];
 
+//        if(!this.mounted){
+//          return;
+//        }
+//
         setState(() {
           List list1 = new List();
           if (curPage == 0) {
@@ -82,9 +99,7 @@ class ArticleListPageState extends State<ArticleListPage> {
           list1.addAll(listData);
           list1.addAll(_listData);
           if (list1.length >= listTotalSize) {
-
             list1.add(Constants.END_LINE_TAG);
-
           }
           listData = list1;
         });
@@ -92,24 +107,20 @@ class ArticleListPageState extends State<ArticleListPage> {
     }, params: map);
   }
 
-
-
   Future<Null> _pullToRefresh() async {
     curPage = 0;
     _getArticleList();
     return null;
   }
 
-
   Widget buildItem(int i) {
-
     var itemData = listData[i];
 
-    if (i == listData.length-1 && itemData.toString() == Constants.END_LINE_TAG) {
+    if (i == listData.length - 1 &&
+        itemData.toString() == Constants.END_LINE_TAG) {
       return new EndLine();
     }
 
     return new ArticleItem(itemData);
   }
-
 }

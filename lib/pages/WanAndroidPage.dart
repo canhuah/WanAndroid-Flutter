@@ -8,10 +8,10 @@ import 'package:wanAndroid/pages/TreePage.dart';
 //主页
 class WanAndroidApp extends StatefulWidget {
   @override
-  _WanAndroidDemoState createState() => new _WanAndroidDemoState();
+  _WanAndroidAppState createState() => new _WanAndroidAppState();
 }
 
-class _WanAndroidDemoState extends State<WanAndroidApp>
+class _WanAndroidAppState extends State<WanAndroidApp>
     with TickerProviderStateMixin {
   int _tabIndex = 0;
 

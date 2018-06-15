@@ -33,13 +33,12 @@ class SearchPageState extends State<SearchPage> {
 
   void changeContent(){
     setState(() {
-
         _searchListPage = new SearchListPage(new ValueKey(_searchController.text));
     });
    }
   @override
   Widget build(BuildContext context) {
-    TextField seaField = new TextField(
+    TextField searchField = new TextField(
       autofocus: true,
       decoration: new InputDecoration(
         border: InputBorder.none,
@@ -53,7 +52,7 @@ class SearchPageState extends State<SearchPage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: seaField,
+        title: searchField,
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.search),
