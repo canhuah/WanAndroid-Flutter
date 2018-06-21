@@ -18,12 +18,12 @@ class ArticleListPage extends StatefulWidget {
   }
 }
 
-class ArticleListPageState extends State<ArticleListPage>
-    with AutomaticKeepAliveClientMixin {
+class ArticleListPageState extends State<ArticleListPage>{
+   // with AutomaticKeepAliveClientMixin {
   //  with AutomaticKeepAliveClientMixin 并且get wantKeepAlive返回true,tab切换时,不会每次执行initState
   //来自 https://www.jianshu.com/p/edb741ab5997
-  @override
-  bool get wantKeepAlive => true;
+ // @override
+  //bool get wantKeepAlive => true;
 
   int curPage = 0;
 

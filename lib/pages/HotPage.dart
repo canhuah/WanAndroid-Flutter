@@ -29,8 +29,8 @@ class HotPageState extends State<HotPage> {
         new Padding(
             padding: EdgeInsets.all(10.0),
             child: new Text('大家都在搜',
-                style: new TextStyle(color: Theme.of(context).accentColor, fontSize: 20.0))
-        ),
+                style: new TextStyle(
+                    color: Theme.of(context).accentColor, fontSize: 20.0))),
         new Wrap(
           spacing: 5.0,
           runSpacing: 5.0,
@@ -39,8 +39,8 @@ class HotPageState extends State<HotPage> {
         new Padding(
             padding: EdgeInsets.all(10.0),
             child: new Text('常用网站',
-                style: new TextStyle(color: Theme.of(context).accentColor, fontSize: 20.0))
-        ),
+                style: new TextStyle(
+                    color: Theme.of(context).accentColor, fontSize: 20.0))),
         new Wrap(
           spacing: 5.0,
           runSpacing: 5.0,
@@ -49,7 +49,6 @@ class HotPageState extends State<HotPage> {
       ],
     );
   }
-
 
   void _getFriend() {
     HttpUtil.get(Api.FRIEND, (data) {
@@ -68,7 +67,8 @@ class HotPageState extends State<HotPage> {
                 Navigator
                     .of(context)
                     .push(new MaterialPageRoute(builder: (context) {
-                  return new ArticleDetailPage(title:itemData['title'],url:itemData['link']);
+                  return new ArticleDetailPage(
+                      title: itemData['title'], url: itemData['link']);
                 }));
               });
 

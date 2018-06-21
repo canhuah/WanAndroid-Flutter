@@ -3,14 +3,16 @@ import 'package:wanAndroid/pages/ArticleListPage.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class ArticlesPage extends StatefulWidget {
+
   var data;
 
   @override
   State<StatefulWidget> createState() {
     return new ArticlesPageState();
   }
+   ArticlesPage(this.data) ;
 
-  ArticlesPage(this.data);
+//  ArticlesPage(this.data);
 }
 
 class ArticlesPageState extends State<ArticlesPage>
