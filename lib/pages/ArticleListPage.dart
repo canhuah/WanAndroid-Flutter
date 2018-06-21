@@ -18,13 +18,14 @@ class ArticleListPage extends StatefulWidget {
   }
 }
 
-class ArticleListPageState extends State<ArticleListPage>{
-   // with AutomaticKeepAliveClientMixin {
+class ArticleListPageState extends State<ArticleListPage> {
+  // with AutomaticKeepAliveClientMixin {
   //  with AutomaticKeepAliveClientMixin 并且get wantKeepAlive返回true,tab切换时,不会每次执行initState
   //来自 https://www.jianshu.com/p/edb741ab5997
- // @override
+  // @override
   //bool get wantKeepAlive => true;
-
+  //**慎用！！！如果大于等于3个tab，这个有bug，最好不用**
+  //  当前tab切到任意非相邻tab(如:第一个tab切换到第三个)，会报错
   int curPage = 0;
 
   Map<String, String> map = new Map();
