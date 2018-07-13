@@ -37,6 +37,7 @@ class ArticleListPageState extends State<ArticleListPage> {
   void initState() {
     super.initState();
 
+
     _getArticleList();
 
     _contraller.addListener(() {
@@ -65,6 +66,7 @@ class ArticleListPageState extends State<ArticleListPage> {
       );
     } else {
       Widget listView = new ListView.builder(
+        key: new PageStorageKey(widget.id),
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
