@@ -9,7 +9,8 @@
 
 [**github地址** ](https://github.com/canhuah/WanAndroid)
 
-喜欢的话可以给个星鼓励一下，也可以进 项目/android/apk-release.apk直接下载Release版本体验一下流畅度
+喜欢的话可以给个星鼓励一下，也可以扫码(使用浏览器扫码,不要使用qq或者微信)直接下载Release版本APK文件体验一下流畅度
+![二维码](https://www.pgyer.com/app/qrcode/wanandroid)
 
 <!--more-->
 ##  项目截图
