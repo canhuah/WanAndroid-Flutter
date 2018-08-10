@@ -1,15 +1,11 @@
 # WanAndroid客户端Flutter版本
 
+
 ## 前言
+项目被张鸿洋微信公众号推荐为优质Flutter开源项目啦
+[推荐几个优质Flutter 开源项目](https://mp.weixin.qq.com/s/1pIPymEHbRY0qktBuCJALA)
 
-谷歌在今年的I/O大会提了Flutter，觉得有可能是一个趋势。 在学习了基本的Dart语法以及Flutter常用Widget的基本使用之后就开始慢慢按捺不住了，决定模仿[Flutter版的开源中国](https://github.com/yubo725/FlutterOSC)写一个WanAndroid客户端。
 
-
-## 项目地址
-
-[**github地址** ](https://github.com/canhuah/WanAndroid)
-
-喜欢的话可以给个星鼓励一下
 可以扫码(使用浏览器扫码,不要使用qq或者微信)直接下载Release版本APK文件体验一下流畅度
 ![二维码](https://www.pgyer.com/app/qrcode/wanandroid)
 
@@ -59,7 +55,7 @@
 
 
 
-可以看到整个项目相对还是非常简单的
+可以看到整个项目相对还是非常简单的，希望能帮到更多的人
 
 ##  项目中碰到并解决的问题
 
