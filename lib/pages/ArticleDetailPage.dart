@@ -20,7 +20,7 @@ class ArticleDetailPage extends StatefulWidget {
 
 class ArticleDetailPageState extends State<ArticleDetailPage> {
 
-  bool isLoadind = true;
+  bool isLoad = true;
 
   final flutterWebViewPlugin = new FlutterWebviewPlugin();
 
@@ -32,11 +32,11 @@ class ArticleDetailPageState extends State<ArticleDetailPage> {
       if (state.type == WebViewState.finishLoad) {
         // 加载完成
         setState(() {
-          isLoadind = false;
+          isLoad = false;
         });
       } else if (state.type == WebViewState.startLoad) {
         setState(() {
-          isLoadind = true;
+          isLoad = true;
         });
       }
     });
@@ -50,7 +50,7 @@ class ArticleDetailPageState extends State<ArticleDetailPage> {
         title: new Text(widget.title),
         bottom: new PreferredSize(
             preferredSize: const Size.fromHeight(1.0),
-            child: isLoadind
+            child: isLoad
                 ? new LinearProgressIndicator()
                 : new Divider(
                     height: 1.0,

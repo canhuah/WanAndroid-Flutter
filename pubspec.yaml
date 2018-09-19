@@ -7,9 +7,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.0
-  flutter_webview_plugin: "^0.1.6"
+  flutter_webview_plugin: "^0.2.1+2"
   shared_preferences: "^0.4.1"
-  event_bus: "^0.4.1"
+  event_bus: "^1.0.1"
 
 
 dev_dependencies:

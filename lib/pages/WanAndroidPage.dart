@@ -19,7 +19,6 @@ class _WanAndroidAppState extends State<WanAndroidApp>
 
   var appBarTitles = ['首页', '发现', '我的'];
 
-  PageController pageController;
 
   var _body;
 

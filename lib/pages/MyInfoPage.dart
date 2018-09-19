@@ -24,7 +24,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
 
     _getName();
 
-    Constants.eventBus.on(LoginEvent).listen((event) {
+    Constants.eventBus.on<LoginEvent>().listen((event) {
       _getName();
     });
   }
