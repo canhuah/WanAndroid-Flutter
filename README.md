@@ -2,8 +2,7 @@
 
 
 ## 前言
-项目被张鸿洋微信公众号推荐为优质Flutter开源项目啦
-[推荐几个优质Flutter 开源项目](https://mp.weixin.qq.com/s/1pIPymEHbRY0qktBuCJALA)
+
 
 
 可以扫码(使用浏览器扫码,不要使用qq或者微信)直接下载Release版本APK文件体验一下流畅度
