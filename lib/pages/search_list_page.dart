@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/item/ArticleItem.dart';
-import 'package:wanAndroid/pages/ArticleDetailPage.dart';
-import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/item/article_item.dart';
+import 'package:wanAndroid/pages/article_detail_page.dart';
+import 'package:wanAndroid/pages/login_page.dart';
 import 'package:wanAndroid/util/StringUtils.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
-import 'package:wanAndroid/widget/EndLine.dart';
+import 'package:wanAndroid/widget/end_line.dart';
 
 class SearchListPage extends StatefulWidget {
   String id;
@@ -24,17 +24,17 @@ class SearchListPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new SearchListPageState();
+    return  SearchListPageState();
   }
 }
 
 class SearchListPageState extends State<SearchListPage> {
   int curPage = 0;
 
-  Map<String, String> map = new Map();
-  List listData = new List();
+  Map<String, String> map =  Map();
+  List listData =  List();
   int listTotalSize = 0;
-  ScrollController _contraller = new ScrollController();
+  ScrollController _contraller =  ScrollController();
 
   @override
   void initState() {
@@ -62,17 +62,17 @@ class SearchListPageState extends State<SearchListPage> {
   @override
   Widget build(BuildContext context) {
     if (listData == null || listData.isEmpty) {
-      return new Center(
-        child: new CircularProgressIndicator(),
+      return  Center(
+        child:  CircularProgressIndicator(),
       );
     } else {
-      Widget listView = new ListView.builder(
+      Widget listView =  ListView.builder(
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
 
-      return new RefreshIndicator(child: listView, onRefresh: pullToRefresh);
+      return  RefreshIndicator(child: listView, onRefresh: pullToRefresh);
     }
   }
 
@@ -90,7 +90,7 @@ class SearchListPageState extends State<SearchListPage> {
         listTotalSize = map["total"];
 
         setState(() {
-          List list1 = new List();
+          List list1 =  List();
           if (curPage == 0) {
             listData.clear();
           }
@@ -120,9 +120,9 @@ class SearchListPageState extends State<SearchListPage> {
 
     if (i == listData.length - 1 &&
         itemData.toString() == Constants.END_LINE_TAG) {
-      return new EndLine();
+      return  EndLine();
     }
 
-    return new ArticleItem.isFromSearch(itemData, widget.id);
+    return  ArticleItem.isFromSearch(itemData, widget.id);
   }
 }

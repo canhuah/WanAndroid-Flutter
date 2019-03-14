@@ -2,8 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 class DataUtils {
-  static final String IS_LOGIN = "isLogin";
-  static final String USERNAME = "userName";
+  static const String IS_LOGIN = "isLogin";
+  static const String USERNAME = "userName";
 
   // 保存用户登录信息，data中包含了userName
   static Future saveLoginInfo(String userName) async {

@@ -1,44 +1,43 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/pages/ArticleDetailPage.dart';
-import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/pages/article_detail_page.dart';
+import 'package:wanAndroid/pages/login_page.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
-import 'package:wanAndroid/widget/EndLine.dart';
+import 'package:wanAndroid/widget/end_line.dart';
 
 //收藏文章界面
-class CollectPage extends StatelessWidget{
+class CollectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('喜欢的文章'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('喜欢的文章'),
       ),
-      body: new CollectListPage(),
+      body: CollectListPage(),
     );
   }
 }
-
 
 class CollectListPage extends StatefulWidget {
   CollectListPage();
 
   @override
   State<StatefulWidget> createState() {
-    return new CollectListPageState();
+    return CollectListPageState();
   }
 }
 
 class CollectListPageState extends State<CollectListPage> {
   int curPage = 0;
 
-  Map<String, String> map = new Map();
-  List listData = new List();
+  Map<String, String> map = Map();
+  List listData = List();
   int listTotalSize = 0;
-  ScrollController _contraller = new ScrollController();
+  ScrollController _contraller = ScrollController();
 
   CollectListPageState();
 
@@ -64,23 +63,22 @@ class CollectListPageState extends State<CollectListPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (listData == null || listData.isEmpty) {
-      return new Center(
-        child: new CircularProgressIndicator(),
+      return Center(
+        child: CircularProgressIndicator(),
       );
     } else {
-      Widget listView = new ListView.builder(
+      Widget listView = ListView.builder(
         //
-        physics: new AlwaysScrollableScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
 
-      return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
     }
   }
 
@@ -97,7 +95,7 @@ class CollectListPageState extends State<CollectListPage> {
         listTotalSize = map["total"];
 
         setState(() {
-          List list1 = new List();
+          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
@@ -120,50 +118,50 @@ class CollectListPageState extends State<CollectListPage> {
     return null;
   }
 
-  //还是建议把Item单独抽出来,可以复用.参考 lib/item/ArticleItem.dart
+  //还是建议把Item单独抽出来,可以复用.参考 lib/item/article_item.dart
   Widget buildItem(int i) {
     var itemData = listData[i];
 
     if (i == listData.length - 1 &&
         itemData.toString() == Constants.END_LINE_TAG) {
-      return new EndLine();
+      return EndLine();
     }
 
-    Row row1 = new Row(
+    Row row1 = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        new Expanded(
-            child: new Row(
+        Expanded(
+            child: Row(
           children: <Widget>[
-            new Text('作者:  '),
-            new Text(
+            Text('作者:  '),
+            Text(
               itemData['author'],
-              style: new TextStyle(color: Theme.of(context).accentColor),
+              style: TextStyle(color: Theme.of(context).accentColor),
             ),
           ],
         )),
-        new Text(itemData['niceDate'])
+        Text(itemData['niceDate'])
       ],
     );
 
-    Row title = new Row(
+    Row title = Row(
       children: <Widget>[
-        new Expanded(
-          child: new Text(
+        Expanded(
+          child: Text(
             itemData['title'],
             softWrap: true,
-            style: new TextStyle(fontSize: 16.0, color: Colors.black),
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
             textAlign: TextAlign.left,
           ),
         )
       ],
     );
 
-    Row chapterName = new Row(
+    Row chapterName = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        new GestureDetector(
-          child: new Icon(
+        GestureDetector(
+          child: Icon(
 //            isCollect ? Icons.favorite : Icons.favorite_border,
 //            color: isCollect ? Colors.red : null,
             Icons.favorite, color: Colors.red,
@@ -175,26 +173,26 @@ class CollectListPageState extends State<CollectListPage> {
       ],
     );
 
-    Column column = new Column(
+    Column column = Column(
       children: <Widget>[
-        new Padding(
+        Padding(
           padding: EdgeInsets.all(10.0),
           child: row1,
         ),
-        new Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
           child: title,
         ),
-        new Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
           child: chapterName,
         ),
       ],
     );
 
-    return new Card(
+    return Card(
       elevation: 4.0,
-      child: new InkWell(
+      child: InkWell(
         onTap: () {
           _itemClick(itemData);
         },
@@ -215,18 +213,16 @@ class CollectListPageState extends State<CollectListPage> {
   }
 
   _login() {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new LoginPage();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return LoginPage();
     }));
   }
 
   void _itemClick(var itemData) async {
-    await Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new ArticleDetailPage(
-          title: itemData['title'], url: itemData['link']);
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ArticleDetailPage(title: itemData['title'], url: itemData['link']);
     }));
   }
-
 
   //取消收藏
   void _itemUnCollect(var itemData) {
@@ -234,7 +230,7 @@ class CollectListPageState extends State<CollectListPage> {
 
     url = Api.UNCOLLECT_LIST;
 
-    Map<String, String> map = new Map();
+    Map<String, String> map = Map();
     map['originId'] = itemData['originId'].toString();
     url = url + itemData['id'].toString() + "/json";
     HttpUtil.post(url, (data) {

@@ -1,6 +1,6 @@
 class Api {
 
-  static const String BaseUrl = "http://www.wanandroid.com/";
+  static const String BaseUrl = "https://www.wanandroid.com/";
 
   //首页banner
   static const   String BANNER = "banner/json";

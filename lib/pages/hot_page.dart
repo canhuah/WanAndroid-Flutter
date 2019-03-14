@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/pages/ArticleDetailPage.dart';
-import 'package:wanAndroid/pages/SearchPage.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/pages/article_detail_page.dart';
+import 'package:wanAndroid/pages/search_page.dart';
 
 class HotPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new HotPageState();
+    return  HotPageState();
   }
 }
 
 class HotPageState extends State<HotPage> {
-  List<Widget> hotkeyWidgets = new List();
-  List<Widget> friendWidgets = new List();
+  List<Widget> hotKeyWidgets =  List();
+  List<Widget> friendWidgets =  List();
 
   @override
   void initState() {
@@ -24,24 +24,24 @@ class HotPageState extends State<HotPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new ListView(
+    return  ListView(
       children: <Widget>[
-        new Padding(
+         Padding(
             padding: EdgeInsets.all(10.0),
-            child: new Text('大家都在搜',
-                style: new TextStyle(
+            child:  Text('大家都在搜',
+                style:  TextStyle(
                     color: Theme.of(context).accentColor, fontSize: 20.0))),
-        new Wrap(
+         Wrap(
           spacing: 5.0,
           runSpacing: 5.0,
-          children: hotkeyWidgets,
+          children: hotKeyWidgets,
         ),
-        new Padding(
+         Padding(
             padding: EdgeInsets.all(10.0),
-            child: new Text('常用网站',
-                style: new TextStyle(
+            child:  Text('常用网站',
+                style:  TextStyle(
                     color: Theme.of(context).accentColor, fontSize: 20.0))),
-        new Wrap(
+         Wrap(
           spacing: 5.0,
           runSpacing: 5.0,
           children: friendWidgets,
@@ -56,18 +56,18 @@ class HotPageState extends State<HotPage> {
         List datas = data;
         friendWidgets.clear();
         for (var itemData in datas) {
-          Widget actionChip = new ActionChip(
+          Widget actionChip =  ActionChip(
               backgroundColor: Theme.of(context).accentColor,
-              label: new Text(
+              label:  Text(
                 itemData['name'],
-                style: new TextStyle(color: Colors.white),
+                style:  TextStyle(color: Colors.white),
               ),
               onPressed: () {
                 itemData['title'] = itemData['name'];
                 Navigator
                     .of(context)
-                    .push(new MaterialPageRoute(builder: (context) {
-                  return new ArticleDetailPage(
+                    .push( MaterialPageRoute(builder: (context) {
+                  return  ArticleDetailPage(
                       title: itemData['title'], url: itemData['link']);
                 }));
               });
@@ -82,23 +82,23 @@ class HotPageState extends State<HotPage> {
     HttpUtil.get(Api.HOTKEY, (data) {
       setState(() {
         List datas = data;
-        hotkeyWidgets.clear();
+        hotKeyWidgets.clear();
         for (var value in datas) {
-          Widget actionChip = new ActionChip(
+          Widget actionChip =  ActionChip(
               backgroundColor: Theme.of(context).accentColor,
-              label: new Text(
+              label:  Text(
                 value['name'],
-                style: new TextStyle(color: Colors.white),
+                style:  TextStyle(color: Colors.white),
               ),
               onPressed: () {
                 Navigator
                     .of(context)
-                    .pushReplacement(new MaterialPageRoute(builder: (context) {
-                  return new SearchPage(value['name']);
+                    .pushReplacement( MaterialPageRoute(builder: (context) {
+                  return  SearchPage(value['name']);
                 }));
               });
 
-          hotkeyWidgets.add(actionChip);
+          hotKeyWidgets.add(actionChip);
         }
       });
     });

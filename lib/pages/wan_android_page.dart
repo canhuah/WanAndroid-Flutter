@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wanAndroid/constant/colors.dart';
-import 'package:wanAndroid/pages/HomeListPage.dart';
-import 'package:wanAndroid/pages/MyInfoPage.dart';
-import 'package:wanAndroid/pages/SearchPage.dart';
-import 'package:wanAndroid/pages/TreePage.dart';
+import 'package:wanAndroid/pages/home_list_page.dart';
+import 'package:wanAndroid/pages/myInfo_page.dart';
+import 'package:wanAndroid/pages/search_page.dart';
+import 'package:wanAndroid/pages/tree_page.dart';
 
 //主页
 class WanAndroidApp extends StatefulWidget {
   @override
-  _WanAndroidAppState createState() => new _WanAndroidAppState();
+  _WanAndroidAppState createState() => _WanAndroidAppState();
 }
 
 class _WanAndroidAppState extends State<WanAndroidApp>
@@ -19,12 +19,11 @@ class _WanAndroidAppState extends State<WanAndroidApp>
 
   var appBarTitles = ['首页', '发现', '我的'];
 
-
   var _body;
 
   initData() {
-    _body = new IndexedStack(
-      children: <Widget>[new HomeListPage(), new TreePage(), new MyInfoPage()],
+    _body = IndexedStack(
+      children: <Widget>[HomeListPage(), TreePage(), MyInfoPage()],
       index: _tabIndex,
     );
   }
@@ -34,19 +33,19 @@ class _WanAndroidAppState extends State<WanAndroidApp>
     super.initState();
 
     _navigationViews = <BottomNavigationBarItem>[
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.home),
-        title: new Text(appBarTitles[0]),
+        title: Text(appBarTitles[0]),
         backgroundColor: Colors.blue,
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
-        title: new Text(appBarTitles[1]),
+        title: Text(appBarTitles[1]),
         backgroundColor: Colors.blue,
       ),
-      new BottomNavigationBarItem(
+      BottomNavigationBarItem(
         icon: const Icon(Icons.person),
-        title: new Text(appBarTitles[2]),
+        title: Text(appBarTitles[2]),
         backgroundColor: Colors.blue,
       ),
     ];
@@ -58,36 +57,34 @@ class _WanAndroidAppState extends State<WanAndroidApp>
   Widget build(BuildContext context) {
     initData();
 
-    return new MaterialApp(
+    return MaterialApp(
       navigatorKey: navigatorKey,
-      theme: new ThemeData(
-          primaryColor: AppColors.colorPrimary,
-          accentColor: Colors.blue
-      ),
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text(
+      theme: ThemeData(
+          primaryColor: AppColors.colorPrimary, accentColor: Colors.blue),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(
             appBarTitles[_tabIndex],
-            style: new TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
-            new IconButton(
-                icon: new Icon(Icons.search),
+            IconButton(
+                icon: Icon(Icons.search),
                 onPressed: () {
 //                为什么不直接Navigator.push(context,
-//                  new MaterialPageRoute(
-//                      builder: (context) => new SearchPage()))
+//                   MaterialPageRoute(
+//                      builder: (context) =>  SearchPage()))
 //                  https://stackoverflow.com/questions/50124355/flutter-navigator-not-working
 
                   navigatorKey.currentState
-                      .push(new MaterialPageRoute(builder: (context) {
-                    return new SearchPage(null);
+                      .push(MaterialPageRoute(builder: (context) {
+                    return SearchPage(null);
                   }));
                 })
           ],
         ),
         body: _body,
-        bottomNavigationBar: new BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(
           items: _navigationViews
               .map((BottomNavigationBarItem navigationView) => navigationView)
               .toList(),

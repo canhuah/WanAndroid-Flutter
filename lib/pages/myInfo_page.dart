@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/event/LoginEvent.dart';
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/event/login_event.dart';
 
-import 'package:wanAndroid/pages/AboutUsPage.dart';
-import 'package:wanAndroid/pages/CollectListPage.dart';
-import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/pages/about_us_page.dart';
+import 'package:wanAndroid/pages/collect_list_page.dart';
+import 'package:wanAndroid/pages/login_page.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
 
 class MyInfoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new MyInfoPageState();
+    return MyInfoPageState();
   }
 }
 
@@ -40,16 +39,16 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    Widget image = new Image.asset(
+    Widget image = Image.asset(
       'images/ic_launcher_round.png',
       width: 100.0,
       height: 100.0,
     );
 
-    Widget raisedButton = new RaisedButton(
-      child: new Text(
+    Widget raisedButton = RaisedButton(
+      child: Text(
         userName == null ? "请登录" : userName,
-        style: new TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white),
       ),
       color: Theme.of(context).accentColor,
       onPressed: () async {
@@ -57,10 +56,8 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
 
         await DataUtils.isLogin().then((isLogin) {
           if (!isLogin) {
-            Navigator
-                .of(context)
-                .push(new MaterialPageRoute(builder: (context) {
-              return new LoginPage();
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return LoginPage();
             }));
           } else {
             print('已登录!');
@@ -69,43 +66,42 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
       },
     );
 
-    Widget listLike = new ListTile(
+    Widget listLike = ListTile(
         leading: const Icon(Icons.favorite),
         title: const Text('喜欢的文章'),
-        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
+        trailing:
+            Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () async {
           await DataUtils.isLogin().then((isLogin) {
             if (isLogin) {
-              Navigator
-                  .of(context)
-                  .push(new MaterialPageRoute(builder: (context) {
-                return new CollectPage();
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return CollectPage();
               }));
             } else {
               print('已登录!');
-              Navigator
-                  .of(context)
-                  .push(new MaterialPageRoute(builder: (context) {
-                return new LoginPage();
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return LoginPage();
               }));
             }
           });
         });
 
-    Widget listAbout = new ListTile(
+    Widget listAbout = ListTile(
         leading: const Icon(Icons.info),
         title: const Text('关于我们'),
-        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
+        trailing:
+            Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () {
-          Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-            return new AboutUsPage();
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return AboutUsPage();
           }));
         });
 
-    Widget listLogout = new ListTile(
+    Widget listLogout = ListTile(
         leading: const Icon(Icons.info),
         title: const Text('退出登录'),
-        trailing:  Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
+        trailing:
+            Icon(Icons.chevron_right, color: Theme.of(context).accentColor),
         onTap: () async {
           DataUtils.clearLoginInfo();
           setState(() {
@@ -113,7 +109,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
           });
         });
 
-    return new ListView(
+    return ListView(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
       children: <Widget>[
         image,

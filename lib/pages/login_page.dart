@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/event/LoginEvent.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/event/login_event.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
 
 //登录 键盘遮挡问题还没有解决 0_0
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new LoginPageState();
+    return LoginPageState();
   }
 }
 
 class LoginPageState extends State<LoginPage> {
-  TextEditingController _nameContro =
-      new TextEditingController(text: 'canhuah');
+  TextEditingController _nameController =
+      TextEditingController(text: 'canhuah');
   TextEditingController _passwordContro =
-      new TextEditingController(text: 'a123456');
+      TextEditingController(text: 'a123456');
   GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   void initState() {
     super.initState();
-    scaffoldKey = new GlobalKey<ScaffoldState>();
+    scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   @override
   Widget build(BuildContext context) {
-    Row avatar = new Row(
+    Row avatar = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        new Icon(
+        Icon(
           Icons.account_circle,
           color: Theme.of(context).accentColor,
           size: 80.0,
@@ -39,15 +41,17 @@ class LoginPageState extends State<LoginPage> {
       ],
     );
 
-    TextField name = new TextField(
+    CupertinoButton(child: null, onPressed: null);
+
+    TextField name = TextField(
       autofocus: true,
-      decoration: new InputDecoration(
+      decoration: InputDecoration(
         labelText: "用户名",
       ),
-      controller: _nameContro,
+      controller: _nameController,
     );
 
-    TextField password = new TextField(
+    TextField password = TextField(
       decoration: InputDecoration(labelText: "密码"),
       obscureText: true,
 
@@ -55,13 +59,13 @@ class LoginPageState extends State<LoginPage> {
 //      onChanged: ,
     );
 
-    Row loginAndRegister = new Row(
+    Row loginAndRegister = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        new RaisedButton(
-          child: new Text(
+        RaisedButton(
+          child: Text(
             "登录",
-            style: new TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -72,10 +76,10 @@ class LoginPageState extends State<LoginPage> {
             _login();
           },
         ),
-        new RaisedButton(
-          child: new Text(
+        RaisedButton(
+          child: Text(
             "注册",
-            style: new TextStyle(
+            style: TextStyle(
               color: Colors.white,
             ),
           ),
@@ -89,19 +93,19 @@ class LoginPageState extends State<LoginPage> {
       ],
     );
 
-    return new Scaffold(
+    return Scaffold(
       key: scaffoldKey,
-      appBar: new AppBar(
-        title: new Text('登录'),
+      appBar: AppBar(
+        title: Text('登录'),
       ),
-      body: new Padding(
+      body: Padding(
         padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 0.0),
-        child: new ListView(
+        child: ListView(
           children: <Widget>[
             avatar,
             name,
             password,
-            new Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 0.0),
             ),
             loginAndRegister,
@@ -112,7 +116,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _login() {
-    String name = _nameContro.text;
+    String name = _nameController.text;
     String password = _passwordContro.text;
     if (name.length == 0) {
       _showMessage('请先输入姓名');
@@ -122,7 +126,7 @@ class LoginPageState extends State<LoginPage> {
       _showMessage('请先输入密码');
       return;
     }
-    Map<String, String> map = new Map();
+    Map<String, String> map = Map();
     map['username'] = name;
     map['password'] = password;
 
@@ -130,7 +134,7 @@ class LoginPageState extends State<LoginPage> {
         Api.LOGIN,
         (data) async {
           DataUtils.saveLoginInfo(name).then((r) {
-            Constants.eventBus.fire(new LoginEvent());
+            Constants.eventBus.fire(LoginEvent());
             Navigator.of(context).pop();
           });
         },
@@ -141,7 +145,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _register() {
-    String name = _nameContro.text;
+    String name = _nameController.text;
     String password = _passwordContro.text;
     if (name.length == 0) {
       _showMessage('请先输入姓名');
@@ -151,7 +155,7 @@ class LoginPageState extends State<LoginPage> {
       _showMessage('请先输入密码');
       return;
     }
-    Map<String, String> map = new Map();
+    Map<String, String> map = Map();
     map['username'] = name;
     map['password'] = password;
     map['repassword'] = password;
@@ -160,7 +164,7 @@ class LoginPageState extends State<LoginPage> {
         Api.REGISTER,
         (data) async {
           DataUtils.saveLoginInfo(name).then((r) {
-            Constants.eventBus.fire(new LoginEvent());
+            Constants.eventBus.fire(LoginEvent());
             Navigator.of(context).pop();
           });
         },
@@ -171,7 +175,6 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _showMessage(String msg) {
-
-    scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(msg)));
+    scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(msg)));
   }
 }

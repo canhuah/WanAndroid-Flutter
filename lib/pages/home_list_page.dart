@@ -1,30 +1,29 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/item/ArticleItem.dart';
-import 'package:wanAndroid/widget/EndLine.dart';
-import 'package:wanAndroid/widget/SlideView.dart';
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/item/article_item.dart';
+import 'package:wanAndroid/widget/end_line.dart';
+import 'package:wanAndroid/widget/slide_view.dart';
 
 class HomeListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new HomeListPageState();
+    return HomeListPageState();
   }
 }
 
 class HomeListPageState extends State<HomeListPage> {
-  List listData = new List();
+  List listData = List();
   var bannerData;
   var curPage = 0;
   var listTotalSize = 0;
 
-  ScrollController _contraller = new ScrollController();
-  TextStyle titleTextStyle = new TextStyle(fontSize: 15.0);
-  TextStyle subtitleTextStyle =
-      new TextStyle(color: Colors.blue, fontSize: 12.0);
+  ScrollController _contraller = ScrollController();
+  TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
+  TextStyle subtitleTextStyle = TextStyle(color: Colors.blue, fontSize: 12.0);
 
   HomeListPageState() {
     _contraller.addListener(() {
@@ -50,7 +49,6 @@ class HomeListPageState extends State<HomeListPage> {
     super.dispose();
   }
 
-
   Future<Null> _pullToRefresh() async {
     curPage = 0;
     getBanner();
@@ -61,17 +59,17 @@ class HomeListPageState extends State<HomeListPage> {
   @override
   Widget build(BuildContext context) {
     if (listData == null) {
-      return new Center(
-        child: new CircularProgressIndicator(),
+      return Center(
+        child: CircularProgressIndicator(),
       );
     } else {
-      Widget listView = new ListView.builder(
+      Widget listView = ListView.builder(
         itemCount: listData.length + 1,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
 
-      return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
     }
   }
 
@@ -84,7 +82,7 @@ class HomeListPageState extends State<HomeListPage> {
       if (data != null) {
         setState(() {
           bannerData = data;
-          _bannerView = new SlideView(bannerData);
+          _bannerView = SlideView(bannerData);
         });
       }
     });
@@ -103,7 +101,7 @@ class HomeListPageState extends State<HomeListPage> {
         listTotalSize = map["total"];
 
         setState(() {
-          List list1 = new List();
+          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
@@ -122,7 +120,7 @@ class HomeListPageState extends State<HomeListPage> {
 
   Widget buildItem(int i) {
     if (i == 0) {
-      return new Container(
+      return Container(
         height: 180.0,
         child: _bannerView,
       );
@@ -132,9 +130,9 @@ class HomeListPageState extends State<HomeListPage> {
     var itemData = listData[i];
 
     if (itemData is String && itemData == Constants.END_LINE_TAG) {
-      return new EndLine();
+      return EndLine();
     }
 
-    return new ArticleItem(itemData);
+    return ArticleItem(itemData);
   }
 }

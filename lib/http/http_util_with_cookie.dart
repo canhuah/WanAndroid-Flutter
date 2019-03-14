@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wanAndroid/http/Api.dart';
+import 'package:wanAndroid/http/api.dart';
 
 /*数据接口类型errorCode>0是接口请求成功
 {

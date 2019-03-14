@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/Constants.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/item/ArticleItem.dart';
-import 'package:wanAndroid/widget/EndLine.dart';
+import 'package:wanAndroid/constant/constants.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/item/article_item.dart';
+import 'package:wanAndroid/widget/end_line.dart';
 
 class ArticleListPage extends StatefulWidget {
-  String id;
+  final String id;
 
   ArticleListPage(this.id);
 
   @override
   State<StatefulWidget> createState() {
-    return new ArticleListPageState();
+    return  ArticleListPageState();
   }
 }
 
@@ -26,10 +26,10 @@ class ArticleListPageState extends State<ArticleListPage>
   //  若当前tab切到任意非相邻tab(如:第一个tab切换到第三个)，会报错，请升级flutter版本
   int curPage = 0;
 
-  Map<String, String> map = new Map();
-  List listData = new List();
+  Map<String, String> map =  Map();
+  List listData =  List();
   int listTotalSize = 0;
-  ScrollController _contraller = new ScrollController();
+  ScrollController _controller =  ScrollController();
 
   @override
   void initState() {
@@ -37,9 +37,9 @@ class ArticleListPageState extends State<ArticleListPage>
 
     _getArticleList();
 
-    _contraller.addListener(() {
-      var maxScroll = _contraller.position.maxScrollExtent;
-      var pixels = _contraller.position.pixels;
+    _controller.addListener(() {
+      var maxScroll = _controller.position.maxScrollExtent;
+      var pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         _getArticleList();
@@ -51,25 +51,25 @@ class ArticleListPageState extends State<ArticleListPage>
 
   @override
   void dispose() {
-    _contraller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (listData == null || listData.isEmpty) {
-      return new Center(
-        child: new CircularProgressIndicator(),
+      return  Center(
+        child:  CircularProgressIndicator(),
       );
     } else {
-      Widget listView = new ListView.builder(
-        key: new PageStorageKey(widget.id),
+      Widget listView =  ListView.builder(
+        key:  PageStorageKey(widget.id),
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
-        controller: _contraller,
+        controller: _controller,
       );
 
-      return new RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return  RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
     }
   }
 
@@ -90,7 +90,7 @@ class ArticleListPageState extends State<ArticleListPage>
 //        }
 //
         setState(() {
-          List list1 = new List();
+          List list1 =  List();
           if (curPage == 0) {
             listData.clear();
           }
@@ -118,9 +118,9 @@ class ArticleListPageState extends State<ArticleListPage>
 
     if (i == listData.length - 1 &&
         itemData.toString() == Constants.END_LINE_TAG) {
-      return new EndLine();
+      return  EndLine();
     }
 
-    return new ArticleItem(itemData);
+    return  ArticleItem(itemData);
   }
 }

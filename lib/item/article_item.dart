@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/Api.dart';
-import 'package:wanAndroid/http/HttpUtilWithCookie.dart';
-import 'package:wanAndroid/pages/ArticleDetailPage.dart';
-import 'package:wanAndroid/pages/LoginPage.dart';
+import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/pages/article_detail_page.dart';
+import 'package:wanAndroid/pages/login_page.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
 import 'package:wanAndroid/util/StringUtils.dart';
-
 
 ///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
 class ArticleItem extends StatefulWidget {
   var itemData;
 
   //是否来自搜索列表
-  bool isSearch;
+   bool isSearch;
+
   //搜索列表的id
   String id;
 
-  ArticleItem(var itemData){
+  ArticleItem(var itemData) {
     this.itemData = itemData;
-    this.isSearch =false;
+    this.isSearch = false;
   }
 
   //命名构造函数,搜索列表的item和普通的item有些不一样
@@ -30,7 +30,7 @@ class ArticleItem extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ArticleItemState();
+    return ArticleItemState();
   }
 }
 
@@ -46,14 +46,14 @@ class ArticleItemState extends State<ArticleItem> {
   }
 
   _login() {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new LoginPage();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return LoginPage();
     }));
   }
 
   void _itemClick(itemData) async {
-    await Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new ArticleDetailPage(
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ArticleDetailPage(
         title: itemData['title'],
         url: itemData['link'],
       );
@@ -80,81 +80,81 @@ class ArticleItemState extends State<ArticleItem> {
   Widget build(BuildContext context) {
     bool isCollect = widget.itemData["collect"];
 
-    Row row1 = new Row(
+    Row author = Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        new Expanded(
-            child: new Row(
+        Expanded(
+            child: Row(
           children: <Widget>[
-            new Text('作者:  '),
-            new Text(
+            Text('作者:  '),
+            Text(
               widget.itemData['author'],
-              style: new TextStyle(color: Theme.of(context).accentColor),
+              style: TextStyle(color: Theme.of(context).accentColor),
             ),
           ],
         )),
-        new Text(widget.itemData['niceDate'])
+        Text(widget.itemData['niceDate'])
       ],
     );
 
-    Row title = new Row(
+    Row title = Row(
       children: <Widget>[
-        new Expanded(
-          child: new Text.rich(
+        Expanded(
+          child: Text.rich(
             widget.isSearch
                 ? StringUtils.getTextSpan(widget.itemData['title'], widget.id)
-                : new TextSpan(text: widget.itemData['title']),
+                : TextSpan(text: widget.itemData['title']),
             softWrap: true,
-            style: new TextStyle(fontSize: 16.0, color: Colors.black),
+            style: TextStyle(fontSize: 16.0, color: Colors.black),
             textAlign: TextAlign.left,
           ),
         )
       ],
     );
 
-    Row chapterName = new Row(
+    Row chapterName = Row(
 //      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        new Expanded(
-          child: new Text(
+        Expanded(
+          child: Text(
             widget.isSearch ? '' : widget.itemData['chapterName'],
             softWrap: true,
-            style: new TextStyle(color: Theme.of(context).accentColor),
+            style: TextStyle(color: Theme.of(context).accentColor),
             textAlign: TextAlign.left,
           ),
         ),
-        new GestureDetector(
-          child: new Icon(
+        IconButton(
+          icon: Icon(
             isCollect ? Icons.favorite : Icons.favorite_border,
             color: isCollect ? Colors.red : null,
           ),
-          onTap: () {
+          onPressed: () {
             _handleOnItemCollect(widget.itemData);
           },
         )
       ],
     );
 
-    Column column = new Column(
+    Column column = Column(
       children: <Widget>[
-        new Padding(
-          padding: EdgeInsets.all(10.0),
-          child: row1,
-        ),
-        new Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+          child: author,
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
           child: title,
         ),
-        new Padding(
-          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+        Padding(
+          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
           child: chapterName,
         ),
       ],
     );
 
-    return new Card(
+    return Card(
       elevation: 4.0,
-      child: new InkWell(
+      child: InkWell(
         child: column,
         onTap: () {
           _itemClick(widget.itemData);
