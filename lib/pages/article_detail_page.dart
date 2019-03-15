@@ -21,7 +21,18 @@ class ArticleDetailPage extends StatefulWidget {
 class ArticleDetailPageState extends State<ArticleDetailPage> {
 //  bool isLoad = true;
 //
-//  final flutterWebViewPlugin = FlutterWebviewPlugin();
+ final flutterWebViewPlugin = FlutterWebviewPlugin();
+
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    flutterWebViewPlugin.onDestroy.listen((_){
+
+      Navigator.of(context).pop();
+    });
+  }
 //
 //  @override
 //  void initState() {

@@ -93,7 +93,8 @@ class ArticleItemState extends State<ArticleItem> {
             ),
           ],
         )),
-        Text(widget.itemData['niceDate'])
+        Text(widget.itemData['niceDate'],
+          style: TextStyle(color: Theme.of(context).accentColor),)
       ],
     );
 
