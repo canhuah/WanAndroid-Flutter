@@ -19,16 +19,12 @@
 <div>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_home.webp' width=320>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_find.webp' width=320>
-</div>
-<div>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_tree.webp' width=320>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_webdetail.webp' width=320>
 </div>
 <div>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_hot.webp' width=320>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_search.webp' width=320>
-</div>
-<div>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_collect.webp' width=320>
     <img src='http://img.cdn.canhuah.com/canhuah_flutter_wanandriod_about.webp' width=320>
 </div>
