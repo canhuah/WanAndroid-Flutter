@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>Flutter环境搭建 | canhua的博客</title><meta name="description" content="Flutter环境搭建"><meta name="keywords" content="flutter"><meta name="author" content="canhuah"><meta name="copyright" content="canhuah"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="http://ta.qq.com"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Flutter环境搭建"><meta name="twitter:description" content="Flutter环境搭建"><meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png"><meta property="og:type" content="article"><meta property="og:title" content="Flutter环境搭建"><meta property="og:url" content="http://cwww.anhuah.com/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><meta property="og:site_name" content="canhua的博客"><meta property="og:description" content="Flutter环境搭建"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'false'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://cwww.anhuah.com/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><link rel="next" title="Flutter实战之WanAndroid项目中碰到的问题" href="http://cwww.anhuah.com/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"><script src="http://tajs.qq.com/stats?sId=66529132" charset="UTF-8"></script><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://canhuah/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  isHome: false,
+  isPost: true
+  
+}</script><meta name="generator" content="Hexo 4.2.0"></head><body><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">canhua的博客</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div></div></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="http://img.cdn.canhuah.com/icon_canhuah.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">13</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><div class="sidebar-toc__content"><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#开始"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">开始</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#下载并配置FlutterSDK"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">下载并配置FlutterSDK</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#Android设置"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">Android设置</span></a><ol class="toc_mobile_items-child"><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#下载安装AndroidStudio"><span class="toc_mobile_items-number">3.0.1.</span> <span class="toc_mobile_items-text">下载安装AndroidStudio</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#Android手机设置"><span class="toc_mobile_items-number">3.0.2.</span> <span class="toc_mobile_items-text">Android手机设置</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#Android模拟器设置"><span class="toc_mobile_items-number">3.0.3.</span> <span class="toc_mobile_items-text">Android模拟器设置</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-3"><a class="toc_mobile_items-link" href="#AndroidStudio插件安装"><span class="toc_mobile_items-number">3.0.4.</span> <span class="toc_mobile_items-text">AndroidStudio插件安装</span></a></li></ol></li></ol></li></ol></div></div></div><div id="body-wrap"><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#下载并配置FlutterSDK"><span class="toc-number">2.</span> <span class="toc-text">下载并配置FlutterSDK</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android设置"><span class="toc-number">3.</span> <span class="toc-text">Android设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载安装AndroidStudio"><span class="toc-number">3.0.1.</span> <span class="toc-text">下载安装AndroidStudio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android手机设置"><span class="toc-number">3.0.2.</span> <span class="toc-text">Android手机设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android模拟器设置"><span class="toc-number">3.0.3.</span> <span class="toc-text">Android模拟器设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AndroidStudio插件安装"><span class="toc-number">3.0.4.</span> <span class="toc-text">AndroidStudio插件安装</span></a></li></ol></li></ol></li></ol></div></div></div><main id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png)"><div id="post-info"><div id="post-title"><div class="posttitle">Flutter环境搭建</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 发表于 2018-07-15<span class="post-meta__separator">|</span><i class="fa fa-history fa-fw" aria-hidden="true"></i> 更新于 2018-07-15</time><div class="post-meta-wordcount"><div class="post-meta-pv-cv"><span><i class="fa fa-eye post-meta__icon fa-fw" aria-hidden="true"> </i>阅读量:</span><span id="busuanzi_value_page_pv"></span></div></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><p>这是Flutter从0开始系列的第一篇文章</p>
+<p>首先是Windows系统电脑下如何配置Flutter开发环境</p>
+<a id="more"></a>
+
+<h1 id="下载并配置FlutterSDK"><a href="#下载并配置FlutterSDK" class="headerlink" title="下载并配置FlutterSDK"></a>下载并配置FlutterSDK</h1><p><strong>首先需要安装 git</strong></p>
+<p><strong>国内开发人员因为墙的原因 要先配置以下环境变量(系统变量)。这个很关键</strong></p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>变量值(别点击请复制)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FLUTTER_STORAGE_BASE_URL</td>
+<td><a href="https://storage.flutter-io.cn" target="_blank" rel="noopener">https://storage.flutter-io.cn</a></td>
+</tr>
+<tr>
+<td>PUB_HOSTED_URL</td>
+<td><a href="https://pub.flutter-io.cn" target="_blank" rel="noopener">https://pub.flutter-io.cn</a></td>
+</tr>
+</tbody></table>
+<p>步骤</p>
+<ol>
+<li><p>下载beta版本的最新的SDK</p>
+<p>截止到2018-07-15的最新版本下载地址<a href="https://storage.googleapis.com/flutter_infra/releases/beta/windows/flutter_windows_v0.5.1-beta.zip" target="_blank" rel="noopener">flutter_windows_v0.51_beta.zip</a></p>
+</li>
+</ol>
+<p>   也可以去<a href="https://flutter.io/sdk-archive/" target="_blank" rel="noopener">Flutter SDK的存档地址</a>找到下载最新版本的Flutter SDK</p>
+<ol start="2">
+<li><p>解压下载好的zip文件</p>
+</li>
+<li><p>在系统变量名为 Path 中添加一个值  flutter sdk安装目录\flutter\bin  \</p>
+<p>例如 D:\flutter_SDK\flutter\bin</p>
+</li>
+<li><p>在flutter目录下找到 flutter_console.bat文件，双击启动</p>
+</li>
+</ol>
+<p>然后就可以在Flutter控制台中运行Flutter命令了</p>
+<p>接着在Flutter控制台运行</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Android设置"><a href="#Android设置" class="headerlink" title="Android设置"></a>Android设置</h1><p>下面介绍Android设置的开发工具以AndroidStudio为例，其他工具如IntelliJ，VS等自己看文档吧(不是很推荐，因为还是要下载Android SDK以及模拟器等 <a href="https://flutter.io/get-started/editor/#androidstudio" target="_blank" rel="noopener">文档地址</a>)</p>
+<h3 id="下载安装AndroidStudio"><a href="#下载安装AndroidStudio" class="headerlink" title="下载安装AndroidStudio"></a>下载安装AndroidStudio</h3><ol>
+<li>下载安装最新版本的<a href="http://www.android-studio.org/" target="_blank" rel="noopener">AndroidStudio</a>(记得安装最新版本)</li>
+<li>启动Android Studio，然后浏览“Android Studio安装向导”。这个会安装最新的Android SDK，Android SDK Platform-Tools和Android SDK Build-Tools，这些都是Flutter在开发Android时所需要的。</li>
+</ol>
+<h3 id="Android手机设置"><a href="#Android手机设置" class="headerlink" title="Android手机设置"></a>Android手机设置</h3><p>如果打算使用Android手机开发，需要以下设置</p>
+<ol>
+<li>在手机上启用 <strong>开发人员选项</strong> 和 <strong>USB调试</strong>(不会请百度)</li>
+<li>用USB先链接手机和电脑， 并授权电脑访问手机</li>
+<li>在终端(如cmd)中，运行 <code>flutter devices</code> 命令以验证Flutter识别你的的Android手机。</li>
+</ol>
+<blockquote>
+<p>如果是OPPO手机，还是使用Android模拟器开发吧</p>
+<p>如果是小米手机，还需要关闭miui优化</p>
+</blockquote>
+<h3 id="Android模拟器设置"><a href="#Android模拟器设置" class="headerlink" title="Android模拟器设置"></a>Android模拟器设置</h3><ol>
+<li>启动 <strong>Android Studio&gt;Tools&gt;Android&gt;AVD Manager</strong> 并选择 <strong>Create Virtual Device</strong>.</li>
+<li>选择设备，然后选择<strong>下一步</strong></li>
+<li>选择一个或多个系统映像，然后选择“ <strong>下一步”</strong>。建议使用<em>x86</em>或<em>x86_64</em>映像。</li>
+<li>在 Emulated Performance下， 选择 <strong>Hardware - GLES 2.0</strong> 以启用硬件加速(记得启用，要不然很慢的)</li>
+<li>验证AVD配置是否正确，然后选择 <strong>Finish</strong>。</li>
+<li>在 Android Virtual Device Manager中， 点击工具栏的 <strong>Run</strong>。模拟器启动并显示所选操作系统版本或设备的启动画面.</li>
+<li>在终端(如cmd)中，运行 <code>flutter devices</code> 命令以验证Flutter识别你的的Android模拟器。</li>
+</ol>
+<blockquote>
+<p>这里也可以用Genymotion模拟器，但是千万别用夜神等其他游戏模拟器</p>
+</blockquote>
+<h3 id="AndroidStudio插件安装"><a href="#AndroidStudio插件安装" class="headerlink" title="AndroidStudio插件安装"></a>AndroidStudio插件安装</h3><p>还需要安装Flutter和Dart这两个插件</p>
+<ol>
+<li>打开AndroidStudio，左上角File-&gt;Settings-&gt;Plugins</li>
+<li>选择<strong>Browse repositories</strong>，输入Flutter，选择并点击install(这里同时会自动安装Dart插件)</li>
+<li>重启AndroidStudio 使插件生效</li>
+</ol>
+<p>至此，在Windows环境下的Flutter开发环境全部配置完毕。</p>
+</div></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/flutter/">flutter    </a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/wechat.jpg" alt="微信"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/alipay.jpg" alt="支付寶"><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"><img class="next_cover lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>Flutter实战之WanAndroid项目中碰到的问题</span></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2018/06/14/Flutter实战之WanAndroid项目中碰到的问题/" title="Flutter实战之WanAndroid项目中碰到的问题"><img class="relatedPosts_cover lazyload"data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2018-06-14</div><div class="relatedPosts_title">Flutter实战之WanAndroid项目中碰到的问题</div></div></a></div><div class="relatedPosts_item"><a href="/2018/06/11/Flutter实战之一起写个WanAndroid客户端吧/" title="Flutter实战之一起写个WanAndroid客户端"><img class="relatedPosts_cover lazyload"data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2018-06-11</div><div class="relatedPosts_title">Flutter实战之一起写个WanAndroid客户端</div></div></a></div><div class="relatedPosts_item"><a href="/2018/05/29/Flutter网络请求之简单封装/" title="Flutter网络请求之简单封装"><img class="relatedPosts_cover lazyload"data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 2018-05-29</div><div class="relatedPosts_title">Flutter网络请求之简单封装</div></div></a></div></div><div class="clear_both"></div></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By canhuah</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="icp"><a href="http://www.beian.miit.gov.cn" target="_blank" rel="noopener"><img class="icp-icon" src="/img/icp.png"><span>浙ICP备18012562号</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script></body></html>

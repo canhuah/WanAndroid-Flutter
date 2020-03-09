@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>canhua的博客 - 做喜欢的事 爱对的人</title><meta name="description" content="android"><meta name="keywords" content="android blog"><meta name="author" content="canhuah"><meta name="copyright" content="canhuah"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="http://ta.qq.com"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="canhua的博客"><meta name="twitter:description" content="android"><meta name="twitter:image" content="http://img.cdn.canhuah.com/icon_canhuah.jpg"><meta property="og:type" content="website"><meta property="og:title" content="canhua的博客"><meta property="og:url" content="http://cwww.anhuah.com/"><meta property="og:site_name" content="canhua的博客"><meta property="og:description" content="android"><meta property="og:image" content="http://img.cdn.canhuah.com/icon_canhuah.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'false'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="canonical" href="http://cwww.anhuah.com/"><script src="http://tajs.qq.com/stats?sId=66529132" charset="UTF-8"></script><link rel="preload" href="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/index.jpg" as="image"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://canhuah/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  baiduPush: false,
+  isHome: true,
+  isPost: false
+  
+}</script><meta name="generator" content="Hexo 4.2.0"></head><body><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">canhua的博客</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div></div></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="http://img.cdn.canhuah.com/icon_canhuah.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">13</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div></div></div></div><div id="body-wrap"><nav class="full_page" id="nav" style="background-image: url(https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/index.jpg)"><div id="site-info"><div id="site-title"><span class="blogtitle">canhua的博客</span></div><div id="site-sub-title"><span class="subtitle"></span></div><div id="site-social-icons"><a class="social-icon" href="https://github.com/canhuah" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a><a class="social-icon" href="mailto:canhuah@163.com" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a></div></div><div class="scroll-down"><i class="fa fa-angle-down scroll-down-effects"></i></div></nav><main id="content-outer"><div class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item article-container"><div class="post_cover left_radius"><a href="/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Flutter环境搭建"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flutter环境搭建"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Flutter环境搭建">Flutter环境搭建</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-07-15</time><div class="content">开始这是Flutter从0开始系列的第一篇文章
+首先是Windows系统电脑下如何配置Flutter开发环境
+
+
+下载并配置FlutterSDK首先需要安装 git
+国内开发人员因为墙的原因 要先配置以下环境变量(系统变量)。这个很关键
+
+
+
+变量名
+变量值(别点击请复制)
+
+
+
+FLUTTER_S ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover right_radius"><a href="/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="Flutter实战之WanAndroid项目中碰到的问题"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flutter实战之WanAndroid项目中碰到的问题"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="Flutter实战之WanAndroid项目中碰到的问题">Flutter实战之WanAndroid项目中碰到的问题</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-14</time><div class="content">写在前面上一篇博客 Flutter实战之一起写个WanAndroid客户端 简单介绍了一下Flutter版本WanAndroid项目，这一篇主要记录项目中碰到的一些问题，避免大家在这些坑中再花太多的时间。
+项目地址github地址  目前已经有54个star，喜欢的话可以给个星鼓励一下
+
+
+
+
+开发 ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover left_radius"><a href="/2018/06/11/Flutter%E5%AE%9E%E6%88%98%E4%B9%8B%E4%B8%80%E8%B5%B7%E5%86%99%E4%B8%AAWanAndroid%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%A7/" title="Flutter实战之一起写个WanAndroid客户端"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flutter实战之一起写个WanAndroid客户端"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/06/11/Flutter%E5%AE%9E%E6%88%98%E4%B9%8B%E4%B8%80%E8%B5%B7%E5%86%99%E4%B8%AAWanAndroid%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%A7/" title="Flutter实战之一起写个WanAndroid客户端">Flutter实战之一起写个WanAndroid客户端</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-11</time><div class="content">前言被张鸿洋微信公众号推荐为优质Flutter开源项目啦   
+推荐几个优质Flutter 开源项目
+可以扫码(使用浏览器扫码,不要使用qq或者微信)直接下载Release版本APK文件体验一下流畅度
+
+
+项目截图
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+ ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover right_radius"><a href="/2018/05/29/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/" title="Flutter网络请求之简单封装"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flutter网络请求之简单封装"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/05/29/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/" title="Flutter网络请求之简单封装">Flutter网络请求之简单封装</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-05-29</time><div class="content">开始数据接口为wanandroid的开放api,返回数据类型如下:
+Code12345&#123;&quot;data&quot;: ...,&quot;errorCode&quot;: 0,&quot;errorMsg&quot;: &quot;&quot;&#125;
+
+errorCode&gt ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover left_radius"><a href="/2018/05/10/%E5%9C%A8AndroidStudio%E4%B8%8A%E7%94%BBUML%E5%9B%BE/" title="在AndroidStudio上画UML图"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在AndroidStudio上画UML图"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/05/10/%E5%9C%A8AndroidStudio%E4%B8%8A%E7%94%BBUML%E5%9B%BE/" title="在AndroidStudio上画UML图">在AndroidStudio上画UML图</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-05-10</time><div class="content">前言在看源码分析博客时,常常能看到下面的类图。最初不懂，经常看的云里雾里，然后自己学习了一下UML图的基本用法，发现基本使用还是很简单的。学习其基本使用是很有必要的这里也和大家一起学习一下在AndroidStudio上画简单UML图。
+
+
+
+插件下载
+根据上图步骤
+
+打开setting-plugin ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover right_radius"><a href="/2018/04/26/retrofit2-SSLHandshakeException/" title="retrofit2碰到的SSLHandshakeException"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="retrofit2碰到的SSLHandshakeException"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/04/26/retrofit2-SSLHandshakeException/" title="retrofit2碰到的SSLHandshakeException">retrofit2碰到的SSLHandshakeException</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-04-26</time><div class="content">错误在使用retrofit2请求正式https接口时报错:
+javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for cert
+原因服务端https证书配置 ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover left_radius"><a href="/2018/04/10/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/" title="学习计划"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="学习计划"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/04/10/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/" title="学习计划">学习计划</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-04-10</time><div class="content">Java知识
+Java 动态代理
+Java 注解Annotation
+xxxx
+xxxxx
+xxxxxxx
+
+Android知识
+WebView
+
+Android的ClassLoader和Java的ClassLoader
+
+简单动画
+
+AMS
+
+Activity启动流程
+
+Dagger2 和 Dag ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover right_radius"><a href="/2018/03/08/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90glide/" title="Glide源码分析"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Glide源码分析"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/03/08/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90glide/" title="Glide源码分析">Glide源码分析</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-03-08</time><div class="content">用法java1Glide.with(-).load(-).into(-);
+
+With()Glide.with()方法有较多的重载,但是RequestManagerRetriever.get()获取RequestManagerRetriever,然后再调用相应的get()方法.
+
+
+Glide.wi ...</div></div></div><div class="recent-post-item article-container"><div class="post_cover left_radius"><a href="/2018/03/08/MemoryLeak/" title="内存泄漏检测与优化"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="内存泄漏检测与优化"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/03/08/MemoryLeak/" title="内存泄漏检测与优化">内存泄漏检测与优化</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-03-08</time><div class="content"></div></div></div><div class="recent-post-item article-container"><div class="post_cover right_radius"><a href="/2018/03/07/webview-Js-and-Android/" title="WebView中Js与Android的交互"><img class="post_bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WebView中Js与Android的交互"></a></div><div class="recent-post-info">  <a class="article-title" href="/2018/03/07/webview-Js-and-Android/" title="WebView中Js与Android的交互">WebView中Js与Android的交互</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-03-07</time><div class="content">WebView的一些基础设置点击这里–&gt;WebView基础设置
+WebView的安全问题java123456webView.removeJavascriptInterface("searchBoxJavaBridge_");//js接口安全漏洞webView.removeJavascriptI ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-fw fa-chevron-right" aria-hidden="true"></i></a></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="http://img.cdn.canhuah.com/icon_canhuah.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"><div class="author-info__name">canhuah</div><div class="author-info__description">android</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">13</div></a></div><div class="card-info-data-item is-center">      <a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div><div class="card-info-bookmark is-center"><a class="bookmark button--primary button--animated" id="bookmark-it" href="javascript:;" title="加入书签" target="_self"><i class="fa fa-bookmark" aria-hidden="true"></i><span>加入书签</span></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/canhuah" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a><a class="social-icon" href="mailto:canhuah@163.com" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fa fa-bullhorn card-announcement-animation" aria-hidden="true"></i><span>公告</span></div><div class="announcement_content">感謝訪問本站，若喜歡請收藏 ^_^</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fa fa-history" aria-hidden="true"></i><span>最新文章</span></div><div class="aside-recent-item"> <div class="aside-recent-post"><a href="/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><div class="aside-post-cover"><img class="aside-post-bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Flutter环境搭建" alt="Flutter环境搭建"></div><div class="aside-post-title"><div class="aside-post_title" href="/2018/07/15/Flutter%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Flutter环境搭建">Flutter环境搭建</div><time class="aside-post_meta post-meta__date">2018-07-15</time></div></a></div><div class="aside-recent-post"><a href="/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"><div class="aside-post-cover"><img class="aside-post-bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Flutter实战之WanAndroid项目中碰到的问题" alt="Flutter实战之WanAndroid项目中碰到的问题"></div><div class="aside-post-title"><div class="aside-post_title" href="/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="Flutter实战之WanAndroid项目中碰到的问题">Flutter实战之WanAndroid项目中碰到的问题</div><time class="aside-post_meta post-meta__date">2018-06-14</time></div></a></div><div class="aside-recent-post"><a href="/2018/06/11/Flutter%E5%AE%9E%E6%88%98%E4%B9%8B%E4%B8%80%E8%B5%B7%E5%86%99%E4%B8%AAWanAndroid%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%A7/"><div class="aside-post-cover"><img class="aside-post-bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Flutter实战之一起写个WanAndroid客户端" alt="Flutter实战之一起写个WanAndroid客户端"></div><div class="aside-post-title"><div class="aside-post_title" href="/2018/06/11/Flutter%E5%AE%9E%E6%88%98%E4%B9%8B%E4%B8%80%E8%B5%B7%E5%86%99%E4%B8%AAWanAndroid%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%A7/" title="Flutter实战之一起写个WanAndroid客户端">Flutter实战之一起写个WanAndroid客户端</div><time class="aside-post_meta post-meta__date">2018-06-11</time></div></a></div><div class="aside-recent-post"><a href="/2018/05/29/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/"><div class="aside-post-cover"><img class="aside-post-bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="Flutter网络请求之简单封装" alt="Flutter网络请求之简单封装"></div><div class="aside-post-title"><div class="aside-post_title" href="/2018/05/29/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/" title="Flutter网络请求之简单封装">Flutter网络请求之简单封装</div><time class="aside-post_meta post-meta__date">2018-05-29</time></div></a></div><div class="aside-recent-post"><a href="/2018/05/10/%E5%9C%A8AndroidStudio%E4%B8%8A%E7%94%BBUML%E5%9B%BE/"><div class="aside-post-cover"><img class="aside-post-bg lazyload" data-src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/top_img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" title="在AndroidStudio上画UML图" alt="在AndroidStudio上画UML图"></div><div class="aside-post-title"><div class="aside-post_title" href="/2018/05/10/%E5%9C%A8AndroidStudio%E4%B8%8A%E7%94%BBUML%E5%9B%BE/" title="在AndroidStudio上画UML图">在AndroidStudio上画UML图</div><time class="aside-post_meta post-meta__date">2018-05-10</time></div></a></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fa fa-tags" aria-hidden="true"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/flutter/" style="font-size: 24px; color: #99a9bf">flutter</a> <a href="/tags/glide/" style="font-size: 16px; color: #999">glide</a> <a href="/tags/retrofit2/" style="font-size: 16px; color: #999">retrofit2</a> <a href="/tags/webview/" style="font-size: 20px; color: #99a1ac">webview</a> <a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 16px; color: #999">优化</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 20px; color: #99a1ac">学习</a> <a href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" style="font-size: 16px; color: #999">源码分析</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fa fa-archive" aria-hidden="true"></i><span>归档</span></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/"><span class="archive-list-date">2018年07月</span><span class="archive-list-count">1</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/"><span class="archive-list-date">2018年06月</span><span class="archive-list-count">2</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/"><span class="archive-list-date">2018年05月</span><span class="archive-list-count">2</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><span class="archive-list-date">2018年04月</span><span class="archive-list-count">2</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/"><span class="archive-list-date">2018年03月</span><span class="archive-list-count">3</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/"><span class="archive-list-date">2016年12月</span><span class="archive-list-count">1</span></a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/"><span class="archive-list-date">2016年11月</span><span class="archive-list-count">2</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fa fa-line-chart" aria-hidden="true"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-article-name">文章数目 :</div><div class="webinfo-article-count">13</div></div><div class="webinfo-item"><div class="webinfo-runtime-name">已运行时间 :</div><div class="webinfo-runtime-count" id="webinfo-runtime-count" start_date="6/7/2016 00:00:00">     </div></div><div class="webinfo-item">      <div class="webinfo-site-uv-name">本站访客数 :</div><div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="webinfo-site-name">本站总访问量 :</div><div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div></div></div></div></div></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2016 - 2020 By canhuah</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="icp"><a href="http://www.beian.miit.gov.cn" target="_blank" rel="noopener"><img class="icp-icon" src="/img/icp.png"><span>浙ICP备18012562号</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><script src="https://cdn.jsdelivr.net/npm/typed.js"></script><script>var typed = new Typed(".subtitle", {
+strings: '今日事&#44;今日畢,Never put off till tomorrow what you can do today'.split(","),
+startDelay: 300,
+typeSpeed: 100,
+loop: true,
+backSpeed: 50
+});</script></body></html>
