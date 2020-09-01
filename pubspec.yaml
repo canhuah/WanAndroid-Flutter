@@ -1,6 +1,7 @@
 name: wanAndroid
 description: WanAndroid 客户端 Flutter版.
-
+environment:
+  sdk: ">=2.3.0 <3.0.0"
 dependencies:
 
   flutter:
