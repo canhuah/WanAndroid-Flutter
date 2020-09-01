@@ -50,7 +50,7 @@
 - ArticleItem.dart
   - Dart的普通构造及命名构造函数
 - HttpUtil.dart
-  - [Flutter网络请求之简单封装](http://www.canhuah.com/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85.html)及cookie的添加
+  - [Flutter网络请求之简单封装](http://www.canhuah.com/2018/05/29/Flutter%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/)及cookie的添加
 
 
 
@@ -60,7 +60,7 @@
 
 - 这个问题比较多，单独写了一篇博客
 
-  [Flutter实战之WanAndroid项目中碰到的问题](http://www.canhuah.com/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98.html)
+  [Flutter实战之WanAndroid项目中碰到的问题](http://www.canhuah.com/2018/06/14/Flutter%E5%AE%9E%E6%88%98%E4%B9%8BWanAndroid%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/)
 
 
 ## 待解决的问题
