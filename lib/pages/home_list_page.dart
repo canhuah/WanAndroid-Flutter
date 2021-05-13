@@ -21,14 +21,14 @@ class HomeListPageState extends State<HomeListPage> {
   var curPage = 0;
   var listTotalSize = 0;
 
-  ScrollController _contraller = ScrollController();
+  ScrollController _controller = ScrollController();
   TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
   TextStyle subtitleTextStyle = TextStyle(color: Colors.blue, fontSize: 12.0);
 
   HomeListPageState() {
-    _contraller.addListener(() {
-      var maxScroll = _contraller.position.maxScrollExtent;
-      var pixels = _contraller.position.pixels;
+    _controller.addListener(() {
+      var maxScroll = _controller.position.maxScrollExtent;
+      var pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         getHomeArticlelist();
@@ -45,7 +45,7 @@ class HomeListPageState extends State<HomeListPage> {
 
   @override
   void dispose() {
-    _contraller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -66,7 +66,7 @@ class HomeListPageState extends State<HomeListPage> {
       Widget listView = ListView.builder(
         itemCount: listData.length + 1,
         itemBuilder: (context, i) => buildItem(i),
-        controller: _contraller,
+        controller: _controller,
       );
 
       return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);

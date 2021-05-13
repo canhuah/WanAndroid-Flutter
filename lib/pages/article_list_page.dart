@@ -57,6 +57,7 @@ class ArticleListPageState extends State<ArticleListPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (listData == null || listData.isEmpty) {
       return  Center(
         child:  CircularProgressIndicator(),

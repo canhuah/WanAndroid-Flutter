@@ -17,7 +17,7 @@ class ArticlesPage extends StatefulWidget {
 
 class ArticlesPageState extends State<ArticlesPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabContro;
+  TabController _tabControl;
   List<Tab> tabs = List();
   List<dynamic> list;
 
@@ -31,12 +31,12 @@ class ArticlesPageState extends State<ArticlesPage>
       tabs.add(Tab(text: value['name']));
     }
 
-    _tabContro = TabController(length: list.length, vsync: this);
+    _tabControl = TabController(length: list.length, vsync: this);
   }
 
   @override
   void dispose() {
-    _tabContro.dispose();
+    _tabControl.dispose();
     super.dispose();
   }
 
@@ -53,15 +53,14 @@ class ArticlesPageState extends State<ArticlesPage>
           child: Scaffold(
               appBar: TabBar(
                 isScrollable: true,
-                controller: _tabContro,
+                controller: _tabControl,
                 labelColor: Theme.of(context).accentColor,
                 unselectedLabelColor: Colors.black,
                 indicatorColor: Theme.of(context).accentColor,
                 tabs: tabs,
               ),
               body: TabBarView(
-                controller: _tabContro,
-//            controller: _tabContro,
+                controller: _tabControl,
                 children: list.map((dynamic itemData) {
                   return ArticleListPage(itemData['id'].toString());
                 }).toList(),

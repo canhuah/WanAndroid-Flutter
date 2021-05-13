@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 //文章详情界面
 class ArticleDetailPage extends StatefulWidget {
   final String title;
@@ -19,49 +19,42 @@ class ArticleDetailPage extends StatefulWidget {
 }
 
 class ArticleDetailPageState extends State<ArticleDetailPage> {
-//  bool isLoad = true;
-//
- final flutterWebViewPlugin = FlutterWebviewPlugin();
 
-
- @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    flutterWebViewPlugin.onDestroy.listen((_){
-
-      Navigator.of(context).pop();
-    });
-  }
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    flutterWebViewPlugin.onStateChanged.listen((state) {
-//      debugPrint('state:_' + state.type.toString());
-//      if (state.type == WebViewState.finishLoad) {
-//        // 加载完成
-//        setState(() {
-//
-//        });
-//      } else if (state.type == WebViewState.startLoad) {
-//        setState(() {
-//
-//        });
-//      }
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
-    return WebviewScaffold(
-      url: widget.url,
+    return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      withZoom: false,
-      withLocalStorage: true,
-      withJavascript: true,
+    body: Container(
+      color: Colors.white,
+      child: WebView(
+        initialUrl: widget.url,
+        //JS执行模式 是否允许JS执行
+        javascriptMode: JavascriptMode.unrestricted,
+        onPageStarted: (String url) {
+
+        },
+        onPageFinished: (String url) {
+
+        },
+        onWebResourceError: (error) {
+
+        },
+
+        navigationDelegate: (NavigationRequest request) {
+          if (request.url.startsWith('http:') ||
+              request.url.startsWith('https:')) {
+
+            return NavigationDecision.navigate;
+          }
+          return NavigationDecision.prevent;
+        },
+
+        gestureNavigationEnabled: true,
+      ),
+    ),
     );
   }
 }

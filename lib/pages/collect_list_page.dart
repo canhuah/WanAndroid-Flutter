@@ -37,7 +37,7 @@ class CollectListPageState extends State<CollectListPage> {
   Map<String, String> map = Map();
   List listData = List();
   int listTotalSize = 0;
-  ScrollController _contraller = ScrollController();
+  ScrollController _control = ScrollController();
 
   CollectListPageState();
 
@@ -47,9 +47,9 @@ class CollectListPageState extends State<CollectListPage> {
 
     _getCollectList();
 
-    _contraller.addListener(() {
-      var maxScroll = _contraller.position.maxScrollExtent;
-      var pixels = _contraller.position.pixels;
+    _control.addListener(() {
+      var maxScroll = _control.position.maxScrollExtent;
+      var pixels = _control.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         _getCollectList();
@@ -59,7 +59,7 @@ class CollectListPageState extends State<CollectListPage> {
 
   @override
   void dispose() {
-    _contraller.dispose();
+    _control.dispose();
     super.dispose();
   }
 
@@ -75,7 +75,7 @@ class CollectListPageState extends State<CollectListPage> {
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
-        controller: _contraller,
+        controller: _control,
       );
 
       return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);

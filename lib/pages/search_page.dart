@@ -31,7 +31,7 @@ class SearchPageState extends State<SearchPage> {
 
   void changeContent() {
     setState(() {
-      _searchListPage = SearchListPage(ValueKey(_searchController.text));
+      _searchListPage = SearchListPage(_searchController.text);
     });
   }
 

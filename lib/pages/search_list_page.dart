@@ -5,36 +5,28 @@ import 'package:wanAndroid/constant/constants.dart';
 import 'package:wanAndroid/http/api.dart';
 import 'package:wanAndroid/http/http_util_with_cookie.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/pages/article_detail_page.dart';
-import 'package:wanAndroid/pages/login_page.dart';
-import 'package:wanAndroid/util/StringUtils.dart';
-import 'package:wanAndroid/util/DataUtils.dart';
 import 'package:wanAndroid/widget/end_line.dart';
 
 class SearchListPage extends StatefulWidget {
-  String id;
+  final String id;
 
   //这里为什么用含有key的这个构造,大家可以试一下不带key 直接SearchListPage(this.id) ,看看会有什么bug;
 
-  SearchListPage(ValueKey<String> key) : super(key: key) {
-    this.id = key.value.toString();
-  }
-
-  SearchListPageState searchListPageState;
+  SearchListPage(this.id) : super(key: ValueKey(id));
 
   @override
   State<StatefulWidget> createState() {
-    return  SearchListPageState();
+    return SearchListPageState();
   }
 }
 
 class SearchListPageState extends State<SearchListPage> {
   int curPage = 0;
 
-  Map<String, String> map =  Map();
-  List listData =  List();
+  Map<String, String> map = Map();
+  List listData = List();
   int listTotalSize = 0;
-  ScrollController _contraller =  ScrollController();
+  ScrollController _contraller = ScrollController();
 
   @override
   void initState() {
@@ -58,21 +50,20 @@ class SearchListPageState extends State<SearchListPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (listData == null || listData.isEmpty) {
-      return  Center(
-        child:  CircularProgressIndicator(),
+      return Center(
+        child: CircularProgressIndicator(),
       );
     } else {
-      Widget listView =  ListView.builder(
+      Widget listView = ListView.builder(
         itemCount: listData.length,
         itemBuilder: (context, i) => buildItem(i),
         controller: _contraller,
       );
 
-      return  RefreshIndicator(child: listView, onRefresh: pullToRefresh);
+      return RefreshIndicator(child: listView, onRefresh: pullToRefresh);
     }
   }
 
@@ -90,7 +81,7 @@ class SearchListPageState extends State<SearchListPage> {
         listTotalSize = map["total"];
 
         setState(() {
-          List list1 =  List();
+          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
@@ -99,9 +90,7 @@ class SearchListPageState extends State<SearchListPage> {
           list1.addAll(listData);
           list1.addAll(_listData);
           if (list1.length >= listTotalSize) {
-
             list1.add(Constants.END_LINE_TAG);
-
           }
           listData = list1;
         });
@@ -120,9 +109,9 @@ class SearchListPageState extends State<SearchListPage> {
 
     if (i == listData.length - 1 &&
         itemData.toString() == Constants.END_LINE_TAG) {
-      return  EndLine();
+      return EndLine();
     }
 
-    return  ArticleItem.isFromSearch(itemData, widget.id);
+    return ArticleItem.isFromSearch(itemData, widget.id);
   }
 }
