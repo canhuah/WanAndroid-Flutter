@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wanAndroid/pages/wan_android_page.dart';
 
 
-void main() => runApp(new WanAndroidApp());
+void main() => runApp(WanAndroidApp());
 
 
 

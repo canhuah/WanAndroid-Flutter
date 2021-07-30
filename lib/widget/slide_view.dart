@@ -21,7 +21,7 @@ class _SlideViewState extends State<SlideView>
   void initState() {
     super.initState();
 
-    tabController = new TabController(
+    tabController = TabController(
         length: widget.list == null ? 0 : widget.list.length, vsync: this);
   }
 
@@ -45,22 +45,22 @@ class _SlideViewState extends State<SlideView>
             },
             child: AspectRatio(
               aspectRatio: 2.0 / 1.0,
-              child: new Stack(
+              child: Stack(
                 children: <Widget>[
-                  new Image.network(
+                  Image.network(
                     imgUrl,
                     fit: BoxFit.fill,
                     width: 1000.0,
                   ),
-                  new Align(
+                  Align(
                     alignment: FractionalOffset.bottomCenter,
-                    child: new Container(
+                    child: Container(
                       width: 1000.0,
                       color: const Color(0x50000000),
                       padding: const EdgeInsets.all(5.0),
-                      child: new Text(title,
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 15.0)),
+                      child: Text(title,
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 15.0)),
                     ),
                   ),
                 ],
@@ -75,7 +75,7 @@ class _SlideViewState extends State<SlideView>
   }
 
   void _handOnItemClick(BannerModel bannerModel) {
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return ArticleDetailPage(title: bannerModel.title, url: bannerModel.url);
     }));
   }
