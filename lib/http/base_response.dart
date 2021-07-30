@@ -4,11 +4,18 @@
 "errorMsg": ""
 }*/
 
-class WanAndroidResp {
+class WResponseData {
 
   int errorCode;
 
   String errorMsg;
 
-  String data;
+  var data;
+
+
+  WResponseData({this.errorCode, this.errorMsg, this.data});
+
+  bool get isSuccess{
+    return 0==errorCode;
+  }
 }

@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/constants.dart';
 import 'package:wanAndroid/http/api.dart';
 import 'package:wanAndroid/http/http_util_with_cookie.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/widget/end_line.dart';
+import 'package:wanAndroid/model/article_model.dart';
 
 class SearchListPage extends StatefulWidget {
   final String id;
@@ -26,15 +25,15 @@ class SearchListPageState extends State<SearchListPage> {
   Map<String, String> map = Map();
   List listData = List();
   int listTotalSize = 0;
-  ScrollController _contraller = ScrollController();
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-    _contraller.addListener(() {
-      var maxScroll = _contraller.position.maxScrollExtent;
-      var pixels = _contraller.position.pixels;
+    _controller.addListener(() {
+      var maxScroll = _controller.position.maxScrollExtent;
+      var pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         _articleQuery();
@@ -46,7 +45,7 @@ class SearchListPageState extends State<SearchListPage> {
 
   @override
   void dispose() {
-    _contraller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -59,8 +58,9 @@ class SearchListPageState extends State<SearchListPage> {
     } else {
       Widget listView = ListView.builder(
         itemCount: listData.length,
-        itemBuilder: (context, i) => buildItem(i),
-        controller: _contraller,
+        itemBuilder: (context, i) => ArticleCell(
+            articleModel: listData[i], id: widget.id, isSearch: true),
+        controller: _controller,
       );
 
       return RefreshIndicator(child: listView, onRefresh: pullToRefresh);
@@ -74,25 +74,15 @@ class SearchListPageState extends State<SearchListPage> {
 
     HttpUtil.post(url, (data) {
       if (data != null) {
-        Map<String, dynamic> map = data;
-
-        var _listData = map['datas'];
-
-        listTotalSize = map["total"];
+        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
 
         setState(() {
-          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
           curPage++;
 
-          list1.addAll(listData);
-          list1.addAll(_listData);
-          if (list1.length >= listTotalSize) {
-            list1.add(Constants.END_LINE_TAG);
-          }
-          listData = list1;
+          listData.addAll(articleListModel.datas ?? []);
         });
       }
     }, params: map);
@@ -102,16 +92,5 @@ class SearchListPageState extends State<SearchListPage> {
     curPage = 0;
     _articleQuery();
     return null;
-  }
-
-  Widget buildItem(int i) {
-    var itemData = listData[i];
-
-    if (i == listData.length - 1 &&
-        itemData.toString() == Constants.END_LINE_TAG) {
-      return EndLine();
-    }
-
-    return ArticleItem.isFromSearch(itemData, widget.id);
   }
 }

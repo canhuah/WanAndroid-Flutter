@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:wanAndroid/model/tree_model.dart';
 import 'package:wanAndroid/pages/article_list_page.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class ArticlesPage extends StatefulWidget {
-  final data;
+  final TreeModel treeModel;
 
-  ArticlesPage(this.data);
+  ArticlesPage(this.treeModel);
 
   @override
   State<StatefulWidget> createState() {
-    return ArticlesPageState();
+    return _ArticlesPageState();
   }
-
-//  ArticlesPage(this.data);
 }
 
-class ArticlesPageState extends State<ArticlesPage>
+class _ArticlesPageState extends State<ArticlesPage>
     with SingleTickerProviderStateMixin {
   TabController _tabControl;
   List<Tab> tabs = List();
-  List<dynamic> list;
+  List<TreeModel> list;
 
   @override
   void initState() {
     super.initState();
 
-    list = widget.data['children'];
+    list = widget.treeModel.children;
 
     for (var value in list) {
-      tabs.add(Tab(text: value['name']));
+      tabs.add(Tab(text: value.name));
     }
 
     _tabControl = TabController(length: list.length, vsync: this);
@@ -46,7 +45,7 @@ class ArticlesPageState extends State<ArticlesPage>
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.data['name']),
+          title: Text(widget.treeModel.name),
         ),
         body: DefaultTabController(
           length: list.length,
@@ -61,8 +60,8 @@ class ArticlesPageState extends State<ArticlesPage>
               ),
               body: TabBarView(
                 controller: _tabControl,
-                children: list.map((dynamic itemData) {
-                  return ArticleListPage(itemData['id'].toString());
+                children: list.map((treeModel) {
+                  return ArticleListPage(treeModel.id.toString());
                 }).toList(),
               )),
         ));

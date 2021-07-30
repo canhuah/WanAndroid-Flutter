@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanAndroid/http/api.dart';
 import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/model/tree_model.dart';
 import 'package:wanAndroid/pages/articles_page.dart';
 
 //知识体系
@@ -12,7 +13,7 @@ class TreePage extends StatefulWidget {
 }
 
 class TreePageState extends State<TreePage> {
-  var listData;
+  List<TreeModel> treeList;
 
   @override
   void initState() {
@@ -22,14 +23,14 @@ class TreePageState extends State<TreePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (listData == null) {
+    if (treeList == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
     } else {
       Widget listView = ListView.builder(
-        itemCount: listData.length,
-        itemBuilder: (context, i) => buildItem(i),
+        itemCount: treeList.length,
+        itemBuilder: (context, i) => TreeCell(treeModel: treeList[i]),
       );
 
       return listView;
@@ -38,29 +39,38 @@ class TreePageState extends State<TreePage> {
 
   _getTree() async {
     HttpUtil.get(Api.TREE, (data) {
-      setState(() {
-        listData = data;
-      });
+      List list = data;
+
+      treeList = list.map((element) {
+        return TreeModel.fromJson(element);
+      }).toList();
+
+      setState(() {});
     });
   }
+}
 
-  Widget buildItem(i) {
-    var itemData = listData[i];
+class TreeCell extends StatelessWidget {
+  final TreeModel treeModel;
 
+  const TreeCell({Key key, this.treeModel}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     Text name = Text(
-      itemData['name'],
+      treeModel.name ?? "",
       softWrap: true,
       style: TextStyle(
           fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.bold),
       textAlign: TextAlign.left,
     );
 
-    List list = itemData['children'];
+    List<TreeModel> list = treeModel.children ?? [];
 
     String strContent = '';
 
     for (var value in list) {
-      strContent += '${value["name"]}   ';
+      strContent += '${value.name}   ';
     }
 
     Text content = Text(
@@ -70,42 +80,42 @@ class TreePageState extends State<TreePage> {
       textAlign: TextAlign.left,
     );
 
-    return Card(
-      elevation: 4.0,
-      child: InkWell(
-        onTap: () {
-          _handOnItemClick(itemData);
-        },
-        child: Container(
-          padding: EdgeInsets.all(15.0),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: name,
-                    ),
-                    content,
-                  ],
-                ),
+    return InkWell(
+      onTap: () {
+        _handOnItemClick(context);
+      },
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        margin: EdgeInsets.all(4),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(4)),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: name,
+                  ),
+                  content,
+                ],
               ),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.black,
-              ),
-            ],
-          ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Colors.black,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  void _handOnItemClick(itemData) {
+  void _handOnItemClick(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ArticlesPage(itemData);
+      return ArticlesPage(treeModel);
     }));
   }
 }

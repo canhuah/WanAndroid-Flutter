@@ -5,11 +5,11 @@ import 'package:wanAndroid/pages/article_detail_page.dart';
 class AboutUsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AboutUsPageState();
+    return _AboutUsPageState();
   }
 }
 
-class AboutUsPageState extends State<AboutUsPage> {
+class _AboutUsPageState extends State<AboutUsPage> {
   @override
   Widget build(BuildContext context) {
     Widget icon = Image.asset(

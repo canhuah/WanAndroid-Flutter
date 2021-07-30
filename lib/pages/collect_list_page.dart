@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/constants.dart';
 import 'package:wanAndroid/http/api.dart';
 import 'package:wanAndroid/http/http_util_with_cookie.dart';
-import 'package:wanAndroid/pages/article_detail_page.dart';
+import 'package:wanAndroid/item/article_item.dart';
+import 'package:wanAndroid/model/article_model.dart';
 import 'package:wanAndroid/pages/login_page.dart';
 import 'package:wanAndroid/util/DataUtils.dart';
-import 'package:wanAndroid/widget/end_line.dart';
 
 //收藏文章界面
 class CollectPage extends StatelessWidget {
@@ -35,7 +34,7 @@ class CollectListPageState extends State<CollectListPage> {
   int curPage = 0;
 
   Map<String, String> map = Map();
-  List listData = List();
+  List<ArticleModel> listData = List();
   int listTotalSize = 0;
   ScrollController _control = ScrollController();
 
@@ -74,7 +73,13 @@ class CollectListPageState extends State<CollectListPage> {
         //
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: listData.length,
-        itemBuilder: (context, i) => buildItem(i),
+        itemBuilder: (context, i) => ArticleCell(
+          articleModel: listData[i],
+          isFromCollect: true,
+          onClickCollect: () {
+            _handleListItemCollect(listData[i]);
+          },
+        ),
         controller: _control,
       );
 
@@ -88,25 +93,15 @@ class CollectListPageState extends State<CollectListPage> {
 
     HttpUtil.get(url, (data) {
       if (data != null) {
-        Map<String, dynamic> map = data;
-
-        var _listData = map['datas'];
-
-        listTotalSize = map["total"];
+        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
 
         setState(() {
-          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
           curPage++;
 
-          list1.addAll(listData);
-          list1.addAll(_listData);
-          if (list1.length >= listTotalSize) {
-            list1.add(Constants.END_LINE_TAG);
-          }
-          listData = list1;
+          listData.addAll(articleListModel.datas ?? []);
         });
       }
     }, params: map);
@@ -116,89 +111,6 @@ class CollectListPageState extends State<CollectListPage> {
     curPage = 0;
     _getCollectList();
     return null;
-  }
-
-  //还是建议把Item单独抽出来,可以复用.参考 lib/item/article_item.dart
-  Widget buildItem(int i) {
-    var itemData = listData[i];
-
-    if (i == listData.length - 1 &&
-        itemData.toString() == Constants.END_LINE_TAG) {
-      return EndLine();
-    }
-
-    Row row1 = Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-            child: Row(
-          children: <Widget>[
-            Text('作者:  '),
-            Text(
-              itemData['author'],
-              style: TextStyle(color: Theme.of(context).accentColor),
-            ),
-          ],
-        )),
-        Text(itemData['niceDate'])
-      ],
-    );
-
-    Row title = Row(
-      children: <Widget>[
-        Expanded(
-          child: Text(
-            itemData['title'],
-            softWrap: true,
-            style: TextStyle(fontSize: 16.0, color: Colors.black),
-            textAlign: TextAlign.left,
-          ),
-        )
-      ],
-    );
-
-    Row chapterName = Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        GestureDetector(
-          child: Icon(
-//            isCollect ? Icons.favorite : Icons.favorite_border,
-//            color: isCollect ? Colors.red : null,
-            Icons.favorite, color: Colors.red,
-          ),
-          onTap: () {
-            _handleListItemCollect(itemData);
-          },
-        )
-      ],
-    );
-
-    Column column = Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: row1,
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-          child: title,
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
-          child: chapterName,
-        ),
-      ],
-    );
-
-    return Card(
-      elevation: 4.0,
-      child: InkWell(
-        onTap: () {
-          _itemClick(itemData);
-        },
-        child: column,
-      ),
-    );
   }
 
   void _handleListItemCollect(itemData) {
@@ -218,24 +130,18 @@ class CollectListPageState extends State<CollectListPage> {
     }));
   }
 
-  void _itemClick(var itemData) async {
-    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ArticleDetailPage(title: itemData['title'], url: itemData['link']);
-    }));
-  }
-
   //取消收藏
-  void _itemUnCollect(var itemData) {
+  void _itemUnCollect(ArticleModel articleModel) {
     String url;
 
     url = Api.UNCOLLECT_LIST;
 
     Map<String, String> map = Map();
-    map['originId'] = itemData['originId'].toString();
-    url = url + itemData['id'].toString() + "/json";
+    map['originId'] = articleModel.originId.toString();
+    url = url + articleModel.id.toString() + "/json";
     HttpUtil.post(url, (data) {
       setState(() {
-        listData.remove(itemData);
+        listData.remove(articleModel);
       });
     }, params: map);
   }

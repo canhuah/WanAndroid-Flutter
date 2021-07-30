@@ -1,121 +1,120 @@
-import 'dart:async';
-import 'package:http/http.dart' as http;
-
-import 'dart:convert';
-
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:wanAndroid/http/api.dart';
+import 'package:wanAndroid/http/base_response.dart';
 
-/*数据接口类型errorCode>0是接口请求成功
-{
-"data": ...,
-"errorCode": 0,
-"errorMsg": ""
-}
-*/
+import 'interceptor/response_Interceptors.dart';
 
-//class Api {
-//  static const String BaseUrl = "http://www.wanandroid.com/";
-//}
-
-//这里只封装了常见的get和post请求类型,不带Cookie
 class HttpUtil {
-  static const String GET = "get";
-  static const String POST = "post";
+  static HttpUtil _instance = HttpUtil._internal();
+  Dio _dio;
 
+  static const CONNECT_TIMEOUT = 30000;
 
-  static void get(String url, Function callback,
-      {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
-    //偷懒..
-    if (!url.startsWith("http")) {
-      url = Api.BaseUrl + url;
+  static CancelToken cancelToken = new CancelToken();
+
+  factory HttpUtil() => _instance;
+
+  //通用全局单例
+  HttpUtil._internal() {
+    if (null == _dio) {
+      _dio = new Dio(new BaseOptions(
+        connectTimeout: CONNECT_TIMEOUT,
+        receiveTimeout: CONNECT_TIMEOUT,
+      ));
+
+      _dio.options.baseUrl = Api.BaseUrl;
+
+      _dio.interceptors.add(LogInterceptor(responseBody: true,)); //开启请求日志
+      _dio.interceptors.add(ResponseInterceptors()); //开启请求日志
+
+      CookieJar cookieJar = CookieJar();
+      _dio.interceptors.add(CookieManager(cookieJar));
     }
-
-    if (params != null && params.isNotEmpty) {
-      StringBuffer sb = new StringBuffer("?");
-      params.forEach((key, value) {
-        sb.write("$key" + "=" + "$value" + "&");
-      });
-      String paramStr = sb.toString();
-      paramStr = paramStr.substring(0, paramStr.length - 1);
-      url += paramStr;
-    }
-    await _request(url, callback,
-        method: GET,
-        headers: headers,
-        errorCallback: errorCallback);
   }
 
-  static void post(String url, Function callback,
-      {Map<String, String> params,
-        Map<String, String> headers,
-        Function errorCallback}) async {
-    if (!url.startsWith("http")) {
-      url = Api.BaseUrl + url;
-    }
-    await _request(url, callback,
-        method: POST,
-        headers: headers, params: params, errorCallback: errorCallback);
+  static HttpUtil getInstance() {
+    return _instance;
   }
 
-  static Future _request(String url, Function callback,
-      {String method,
-        Map<String, String> headers,
-        Map<String, String> params,
-        Function errorCallback}) async {
-    String errorMsg;
-    int errorCode;
-    var data;
+  //通GET请求
+  Future<dynamic> get(String path, {String param, params}) async {
+    // 拼接路径
+    if (param != null && param.isNotEmpty) {
+      path = path + "/" + param;
+    }
+
+    Response response;
+
     try {
-      Map<String, String> headerMap = headers == null ? new Map() : headers;
-      Map<String, String> paramMap = params == null ? new Map() : params;
+      response = await _dio.get(
+        path,
+        queryParameters: params,
+        cancelToken: cancelToken,
+      );
 
+      WResponseData result = response.data as WResponseData;
 
-      http.Response res;
-      if (POST == method) {
-        print("POST:URL="+url);
-        print("POST:BODY="+paramMap.toString());
-        res = await http.post(url, headers: headerMap, body: paramMap);
+      if (result.isSuccess) {
+        return result.data;
       } else {
-        print("GET:URL="+url);
-        res = await http.get(url, headers: headerMap);
+        Exception exception = Exception(result.errorMsg);
+        handleError(exception);
+        // throw Exception(result.errorMsg);
       }
-
-      if (res.statusCode != 200) {
-        errorMsg = "网络请求错误,状态码:" + res.statusCode.toString() ;
-
-        _handError(errorCallback, errorMsg);
-        return;
-      }
-
-      //以下部分可以根据自己业务需求封装,这里是errorCode>=0则为请求成功,data里的是数据部分
-      //记得Map中的泛型为dynamic
-      Map<String, dynamic> map = json.decode(res.body);
-
-      errorCode = map['errorCode'];
-      errorMsg = map['errorMsg'];
-      data = map['data'];
-
-
-      // callback返回data,数据类型为dynamic
-      //errorCallback中为了方便我直接返回了String类型的errorMsg
-      if (callback != null) {
-        if (errorCode >= 0) {
-          callback(data);
-        } else {
-          _handError(errorCallback, errorMsg);
-        }
-      }
-    } catch (exception) {
-      _handError(errorCallback, exception.toString());
+    } on DioError catch (e) {
+      handleError(e);
+      // throw e;
     }
   }
 
-  static void _handError(Function errorCallback,String errorMsg){
-    if (errorCallback != null) {
-      errorCallback(errorMsg);
+  //POST请求
+  Future<WResponseData> post(path,
+      {String param, params, Map<String, dynamic> queryParameters}) async {
+    // 拼接路径
+    if (param != null && param.isNotEmpty) {
+      path = path + "/" + param;
     }
-    print("errorMsg :"+errorMsg);
+
+    Response response;
+    try {
+      response = await _dio.post(path,
+          data: params,
+          queryParameters: queryParameters,
+          options: Options(
+              contentType: queryParameters != null
+                  ? "multipart/form-data"
+                  : "application/json"),
+          cancelToken: cancelToken);
+
+      WResponseData result = response.data as WResponseData;
+
+      if (result.isSuccess) {
+        return result.data;
+      } else {
+        Exception exception = Exception(result.errorMsg);
+        handleError(exception);
+        throw Exception(result.errorMsg);
+      }
+    } on DioError catch (e) {
+      handleError(e);
+      throw e;
+    }
+  }
+
+  //取消当前请求
+  static void cancelRequests({CancelToken token}) {
+    if (token == null) {
+      token = cancelToken;
+    }
+    token.cancel("cancelled");
+  }
+
+  static void handleError(Exception exception) {
+    print("exception.toString()");
+    print(exception.toString());
+
+
   }
 }

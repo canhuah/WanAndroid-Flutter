@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/constants.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/http_manager.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/widget/end_line.dart';
+import 'package:wanAndroid/model/article_model.dart';
 
 class ArticleListPage extends StatefulWidget {
   final String id;
@@ -14,7 +12,7 @@ class ArticleListPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return  ArticleListPageState();
+    return ArticleListPageState();
   }
 }
 
@@ -26,10 +24,10 @@ class ArticleListPageState extends State<ArticleListPage>
   //  若当前tab切到任意非相邻tab(如:第一个tab切换到第三个)，会报错，请升级flutter版本
   int curPage = 0;
 
-  Map<String, String> map =  Map();
-  List listData =  List();
+  Map<String, String> map = Map();
+  List listData = List();
   int listTotalSize = 0;
-  ScrollController _controller =  ScrollController();
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
@@ -59,69 +57,43 @@ class ArticleListPageState extends State<ArticleListPage>
   Widget build(BuildContext context) {
     super.build(context);
     if (listData == null || listData.isEmpty) {
-      return  Center(
-        child:  CircularProgressIndicator(),
+      return Center(
+        child: CircularProgressIndicator(),
       );
     } else {
-      Widget listView =  ListView.builder(
-        key:  PageStorageKey(widget.id),
+      Widget listView = ListView.builder(
+        key: ValueKey(widget.id),
         itemCount: listData.length,
-        itemBuilder: (context, i) => buildItem(i),
+        itemBuilder: (context, i) => ArticleCell(articleModel: listData[i]),
         controller: _controller,
       );
 
-      return  RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
+      return RefreshIndicator(child: listView, onRefresh: _pullToRefresh);
     }
   }
 
-  void _getArticleList() {
-    String url = Api.ARTICLE_LIST;
-    url += "$curPage/json";
-    map['cid'] = widget.id;
-    HttpUtil.get(url, (data) {
-      if (data != null) {
-        Map<String, dynamic> map = data;
+  void _getArticleList() async {
+    String param = "$curPage/json";
 
-        var _listData = map['datas'];
+    dynamic data = await HttpManager.getArticleList(param, {"cid": widget.id});
 
-        listTotalSize = map["total"];
+    if (data != null) {
+      ArticleListModel articleListModel = ArticleListModel.fromJson(data);
 
-//        if(!this.mounted){
-//          return;
-//        }
-//
-        setState(() {
-          List list1 =  List();
-          if (curPage == 0) {
-            listData.clear();
-          }
-          curPage++;
+      setState(() {
+        if (curPage == 0) {
+          listData.clear();
+        }
+        curPage++;
 
-          list1.addAll(listData);
-          list1.addAll(_listData);
-          if (list1.length >= listTotalSize) {
-            list1.add(Constants.END_LINE_TAG);
-          }
-          listData = list1;
-        });
-      }
-    }, params: map);
+        listData.addAll(articleListModel.datas ?? []);
+      });
+    }
   }
 
   Future<Null> _pullToRefresh() async {
     curPage = 0;
     _getArticleList();
     return null;
-  }
-
-  Widget buildItem(int i) {
-    var itemData = listData[i];
-
-    if (i == listData.length - 1 &&
-        itemData.toString() == Constants.END_LINE_TAG) {
-      return  EndLine();
-    }
-
-    return  ArticleItem(itemData);
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/constants.dart';
 import 'package:wanAndroid/http/api.dart';
 import 'package:wanAndroid/http/http_util_with_cookie.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/widget/end_line.dart';
+import 'package:wanAndroid/model/article_model.dart';
+import 'package:wanAndroid/model/bannel_model.dart';
 import 'package:wanAndroid/widget/slide_view.dart';
 
 class HomeListPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class HomeListPage extends StatefulWidget {
 
 class HomeListPageState extends State<HomeListPage> {
   List listData = List();
-  var bannerData;
+
   var curPage = 0;
   var listTotalSize = 0;
 
@@ -81,8 +81,10 @@ class HomeListPageState extends State<HomeListPage> {
     HttpUtil.get(bannerUrl, (data) {
       if (data != null) {
         setState(() {
-          bannerData = data;
-          _bannerView = SlideView(bannerData);
+          List list = data;
+          List<BannerModel> banners =
+              list.map((e) => BannerModel.fromJson(e)).toList();
+          _bannerView = SlideView(banners);
         });
       }
     });
@@ -94,25 +96,15 @@ class HomeListPageState extends State<HomeListPage> {
 
     HttpUtil.get(url, (data) {
       if (data != null) {
-        Map<String, dynamic> map = data;
-
-        var _listData = map['datas'];
-
-        listTotalSize = map["total"];
+        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
 
         setState(() {
-          List list1 = List();
           if (curPage == 0) {
             listData.clear();
           }
           curPage++;
 
-          list1.addAll(listData);
-          list1.addAll(_listData);
-          if (list1.length >= listTotalSize) {
-            list1.add(Constants.END_LINE_TAG);
-          }
-          listData = list1;
+          listData.addAll(articleListModel.datas ?? []);
         });
       }
     });
@@ -127,12 +119,8 @@ class HomeListPageState extends State<HomeListPage> {
     }
     i -= 1;
 
-    var itemData = listData[i];
-
-    if (itemData is String && itemData == Constants.END_LINE_TAG) {
-      return EndLine();
-    }
-
-    return ArticleItem(itemData);
+    return ArticleCell(
+      articleModel: listData[i],
+    );
   }
 }

@@ -44,6 +44,7 @@ class ArticleDetailPageState extends State<ArticleDetailPage> {
         },
 
         navigationDelegate: (NavigationRequest request) {
+          ///拦截了简书文章里乱七八糟的跳转
           if (request.url.startsWith('http:') ||
               request.url.startsWith('https:')) {
 

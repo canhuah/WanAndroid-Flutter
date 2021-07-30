@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:wanAndroid/model/bannel_model.dart';
 import 'package:wanAndroid/pages/article_detail_page.dart';
 
 class SlideView extends StatefulWidget {
-  var data;
+  final List<BannerModel> list;
 
-  SlideView(this.data);
+  SlideView(this.list);
 
   @override
   State<StatefulWidget> createState() {
-    return new SlideViewState(data);
+    return _SlideViewState();
   }
 }
 
-class SlideViewState extends State<SlideView>
+class _SlideViewState extends State<SlideView>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-  List data;
-
-  SlideViewState(this.data);
 
   @override
   void initState() {
     super.initState();
-    tabController =
-        new TabController(length: data == null ? 0 : data.length, vsync: this);
+
+    tabController = new TabController(
+        length: widget.list == null ? 0 : widget.list.length, vsync: this);
   }
 
   @override
@@ -35,13 +34,12 @@ class SlideViewState extends State<SlideView>
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    if (data != null && data.length > 0) {
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        var imgUrl = item['imagePath'];
-        var title = item['title'];
-        item['link'] = item['url'];
-        items.add(new GestureDetector(
+    if (widget.list != null && widget.list.length > 0) {
+      for (var i = 0; i < widget.list.length; i++) {
+        BannerModel item = widget.list[i];
+        String imgUrl = item.imagePath;
+        String title = item.title;
+        items.add(GestureDetector(
             onTap: () {
               _handOnItemClick(item);
             },
@@ -51,7 +49,7 @@ class SlideViewState extends State<SlideView>
                 children: <Widget>[
                   new Image.network(
                     imgUrl,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     width: 1000.0,
                   ),
                   new Align(
@@ -70,15 +68,15 @@ class SlideViewState extends State<SlideView>
             )));
       }
     }
-    return new TabBarView(
+    return TabBarView(
       controller: tabController,
       children: items,
     );
   }
 
-  void _handOnItemClick(itemData) {
+  void _handOnItemClick(BannerModel bannerModel) {
     Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
-      return new ArticleDetailPage(title:itemData['title'],url: itemData['link']);
+      return ArticleDetailPage(title: bannerModel.title, url: bannerModel.url);
     }));
   }
 }

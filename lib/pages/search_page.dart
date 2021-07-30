@@ -3,29 +3,27 @@ import 'package:wanAndroid/pages/hot_page.dart';
 import 'package:wanAndroid/pages/search_list_page.dart';
 
 class SearchPage extends StatefulWidget {
-  String searchStr;
+  final String searchStr;
 
   SearchPage(this.searchStr);
 
   @override
   State<StatefulWidget> createState() {
-    return SearchPageState(searchStr);
+    return _SearchPageState();
   }
 }
 
-class SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage> {
   TextEditingController _searchController = TextEditingController();
 
   SearchListPage _searchListPage;
-  String searchStr;
 
-  SearchPageState(this.searchStr);
 
   @override
   void initState() {
     super.initState();
 
-    _searchController = TextEditingController(text: searchStr);
+    _searchController = TextEditingController(text: widget.searchStr);
     changeContent();
   }
 

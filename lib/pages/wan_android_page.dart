@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/constant/colors.dart';
+import 'package:wanAndroid/constant/app_colors.dart';
 import 'package:wanAndroid/pages/home_list_page.dart';
 import 'package:wanAndroid/pages/myInfo_page.dart';
 import 'package:wanAndroid/pages/search_page.dart';
@@ -17,16 +17,9 @@ class _WanAndroidAppState extends State<WanAndroidApp>
 
   List<BottomNavigationBarItem> _navigationViews;
 
-  var appBarTitles = ['首页', '发现', '我的'];
+  List<String> appBarTitles = ['首页', '发现', '我的'];
 
-  var _body;
-
-  initData() {
-    _body = IndexedStack(
-      children: <Widget>[HomeListPage(), TreePage(), MyInfoPage()],
-      index: _tabIndex,
-    );
-  }
+  Widget _body;
 
   @override
   void initState() {
@@ -35,18 +28,18 @@ class _WanAndroidAppState extends State<WanAndroidApp>
     _navigationViews = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: const Icon(Icons.home),
-        title: Text(appBarTitles[0]),
-        backgroundColor: Colors.blue,
+        label: appBarTitles[0],
+        backgroundColor: AppColors.colorPrimary,
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.widgets),
-        title: Text(appBarTitles[1]),
-        backgroundColor: Colors.blue,
+        label: appBarTitles[1],
+        backgroundColor: AppColors.colorPrimary,
       ),
       BottomNavigationBarItem(
         icon: const Icon(Icons.person),
-        title: Text(appBarTitles[2]),
-        backgroundColor: Colors.blue,
+        label: appBarTitles[2],
+        backgroundColor: AppColors.colorPrimary,
       ),
     ];
   }
@@ -55,12 +48,16 @@ class _WanAndroidAppState extends State<WanAndroidApp>
 
   @override
   Widget build(BuildContext context) {
-    initData();
+    _body = IndexedStack(
+      children: <Widget>[HomeListPage(), TreePage(), MyInfoPage()],
+      index: _tabIndex,
+    );
 
     return MaterialApp(
       navigatorKey: navigatorKey,
       theme: ThemeData(
-          primaryColor: AppColors.colorPrimary, accentColor: Colors.blue),
+          primaryColor: AppColors.colorPrimary,
+          accentColor: AppColors.colorPrimary),
       home: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -90,6 +87,8 @@ class _WanAndroidAppState extends State<WanAndroidApp>
               .toList(),
           currentIndex: _tabIndex,
           type: BottomNavigationBarType.fixed,
+          selectedFontSize: 10,
+          unselectedFontSize: 10,
           onTap: (index) {
             setState(() {
               _tabIndex = index;
