@@ -69,7 +69,7 @@ class TreeCell extends StatelessWidget {
 
     String strContent = '';
 
-    for (var value in list) {
+    for (TreeModel value in list) {
       strContent += '${value.name}   ';
     }
 

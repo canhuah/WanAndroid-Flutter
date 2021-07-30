@@ -32,8 +32,8 @@ class SearchListPageState extends State<SearchListPage> {
     super.initState();
 
     _controller.addListener(() {
-      var maxScroll = _controller.position.maxScrollExtent;
-      var pixels = _controller.position.pixels;
+      double maxScroll = _controller.position.maxScrollExtent;
+      double pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         _articleQuery();

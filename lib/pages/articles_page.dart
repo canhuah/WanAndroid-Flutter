@@ -26,7 +26,7 @@ class _ArticlesPageState extends State<ArticlesPage>
 
     list = widget.treeModel.children;
 
-    for (var value in list) {
+    for (TreeModel value in list) {
       tabs.add(Tab(text: value.name));
     }
 

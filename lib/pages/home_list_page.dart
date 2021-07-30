@@ -18,8 +18,8 @@ class HomeListPage extends StatefulWidget {
 class HomeListPageState extends State<HomeListPage> {
   List listData = List();
 
-  var curPage = 0;
-  var listTotalSize = 0;
+  int curPage = 0;
+  int listTotalSize = 0;
 
   ScrollController _controller = ScrollController();
   TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
@@ -27,8 +27,8 @@ class HomeListPageState extends State<HomeListPage> {
 
   HomeListPageState() {
     _controller.addListener(() {
-      var maxScroll = _controller.position.maxScrollExtent;
-      var pixels = _controller.position.pixels;
+      double maxScroll = _controller.position.maxScrollExtent;
+      double pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         getHomeArticlelist();

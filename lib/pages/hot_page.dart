@@ -61,7 +61,7 @@ class HotPageState extends State<HotPage> {
             list.map((e) => FriendModel.fromJson(e)).toList();
 
         hotKeyWidgets.clear();
-        for (var friendModel in friends) {
+        for (FriendModel friendModel in friends) {
           Widget actionChip = HotKeyCell(
             text: friendModel.name,
             onPressed: () {
@@ -87,7 +87,7 @@ class HotPageState extends State<HotPage> {
             list.map((e) => HotKeyModel.fromJson(e)).toList();
 
         hotKeyWidgets.clear();
-        for (var hotKeyModel in hotKeys) {
+        for (HotKeyModel hotKeyModel in hotKeys) {
           Widget actionChip = HotKeyCell(
             text: hotKeyModel.name,
             onPressed: () {

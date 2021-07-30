@@ -47,8 +47,8 @@ class CollectListPageState extends State<CollectListPage> {
     _getCollectList();
 
     _control.addListener(() {
-      var maxScroll = _control.position.maxScrollExtent;
-      var pixels = _control.position.pixels;
+      double maxScroll = _control.position.maxScrollExtent;
+      double pixels = _control.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
         _getCollectList();

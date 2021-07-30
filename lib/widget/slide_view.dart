@@ -35,7 +35,7 @@ class _SlideViewState extends State<SlideView>
   Widget build(BuildContext context) {
     List<Widget> items = [];
     if (widget.list != null && widget.list.length > 0) {
-      for (var i = 0; i < widget.list.length; i++) {
+      for (int i = 0; i < widget.list.length; i++) {
         BannerModel item = widget.list[i];
         String imgUrl = item.imagePath;
         String title = item.title;
