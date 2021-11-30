@@ -1,44 +1,45 @@
-//https://jsontodart.com 生成
+import 'as_t.dart';
+
 class TreeModel {
-  List<TreeModel> children;
-  int courseId;
-  int id;
-  String name;
-  int order;
-  int parentChapterId;
-  bool userControlSetTop;
-  int visible;
+  List<TreeModel>? children;
+  int? courseId;
+  int? id;
+  String? name;
+  int? order;
+  int? parentChapterId;
+  bool? userControlSetTop;
+  int? visible;
 
   TreeModel(
       {this.children,
-        this.courseId,
-        this.id,
-        this.name,
-        this.order,
-        this.parentChapterId,
-        this.userControlSetTop,
-        this.visible});
+      this.courseId,
+      this.id,
+      this.name,
+      this.order,
+      this.parentChapterId,
+      this.userControlSetTop,
+      this.visible});
 
   TreeModel.fromJson(Map<String, dynamic> json) {
     if (json['children'] != null) {
-      children = new List<TreeModel>();
+      children = [];
       json['children'].forEach((v) {
-        children.add(new TreeModel.fromJson(v));
+        children!.add(TreeModel.fromJson(v));
       });
     }
-    courseId = json['courseId'];
-    id = json['id'];
-    name = json['name'];
-    order = json['order'];
-    parentChapterId = json['parentChapterId'];
-    userControlSetTop = json['userControlSetTop'];
-    visible = json['visible'];
+    courseId = asT<int?>(json['courseId']);
+    id = asT<int?>(json['id']);
+    name = asT<String?>(json['name']);
+    order = asT<int?>(json['order']);
+    parentChapterId = asT<int?>(json['parentChapterId']);
+    userControlSetTop = asT<bool?>(json['userControlSetTop']);
+    visible = asT<int?>(json['visible']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = {};
     if (this.children != null) {
-      data['children'] = this.children.map((v) => v.toJson()).toList();
+      data['children'] = this.children!.map((v) => v.toJson()).toList();
     }
     data['courseId'] = this.courseId;
     data['id'] = this.id;

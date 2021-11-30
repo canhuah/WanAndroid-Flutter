@@ -15,14 +15,14 @@ class SlideView extends StatefulWidget {
 
 class _SlideViewState extends State<SlideView>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
+  late TabController tabController;
 
   @override
   void initState() {
     super.initState();
 
     tabController = TabController(
-        length: widget.list == null ? 0 : widget.list.length, vsync: this);
+        length:  widget.list.length, vsync: this);
   }
 
   @override
@@ -34,17 +34,17 @@ class _SlideViewState extends State<SlideView>
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    if (widget.list != null && widget.list.length > 0) {
+    if (widget.list.isNotEmpty) {
       for (int i = 0; i < widget.list.length; i++) {
         BannerModel item = widget.list[i];
-        String imgUrl = item.imagePath;
-        String title = item.title;
+        String imgUrl = item.imagePath??"";
+        String title = item.title??"";
         items.add(GestureDetector(
             onTap: () {
               _handOnItemClick(item);
             },
             child: AspectRatio(
-              aspectRatio: 2.0 / 1.0,
+              aspectRatio: 9.0 / 5.0,
               child: Stack(
                 children: <Widget>[
                   Image.network(
@@ -76,7 +76,8 @@ class _SlideViewState extends State<SlideView>
 
   void _handOnItemClick(BannerModel bannerModel) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return ArticleDetailPage(title: bannerModel.title, url: bannerModel.url);
+      return ArticleDetailPage(
+          title: bannerModel.title ?? "", url: bannerModel.url ?? "");
     }));
   }
 }

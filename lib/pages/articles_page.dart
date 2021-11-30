@@ -16,15 +16,15 @@ class ArticlesPage extends StatefulWidget {
 
 class _ArticlesPageState extends State<ArticlesPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabControl;
-  List<Tab> tabs = List();
-  List<TreeModel> list;
+  late TabController _tabControl;
+  List<Tab> tabs = [];
+  late List<TreeModel> list;
 
   @override
   void initState() {
     super.initState();
 
-    list = widget.treeModel.children;
+    list = widget.treeModel.children ?? [];
 
     for (TreeModel value in list) {
       tabs.add(Tab(text: value.name));
@@ -45,7 +45,7 @@ class _ArticlesPageState extends State<ArticlesPage>
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.treeModel.name),
+          title: Text(widget.treeModel.name??""),
         ),
         body: DefaultTabController(
           length: list.length,

@@ -7,9 +7,9 @@ class ArticleDetailPage extends StatefulWidget {
   final String url;
 
   ArticleDetailPage({
-    Key key,
-    @required this.title,
-    @required this.url,
+    Key? key,
+    required this.title,
+    required this.url,
   }) : super(key: key);
 
   @override

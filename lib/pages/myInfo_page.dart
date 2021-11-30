@@ -5,7 +5,7 @@ import 'package:wanAndroid/event/login_event.dart';
 import 'package:wanAndroid/pages/about_us_page.dart';
 import 'package:wanAndroid/pages/collect_list_page.dart';
 import 'package:wanAndroid/pages/login_page.dart';
-import 'package:wanAndroid/util/DataUtils.dart';
+import 'package:wanAndroid/util/data_utils.dart';
 
 class MyInfoPage extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
-  String userName;
+  String? userName;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class MyInfoPageState extends State<MyInfoPage> with WidgetsBindingObserver {
 
     Widget raisedButton = RaisedButton(
       child: Text(
-        userName == null ? "请登录" : userName,
+        userName ?? "请登录" ,
         style: TextStyle(color: Colors.white),
       ),
       color: Theme.of(context).accentColor,

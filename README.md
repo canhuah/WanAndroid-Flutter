@@ -2,7 +2,7 @@
 
 
 ## 前言
-被张鸿洋微信公众号推荐为优质Flutter开源项目啦   
+被张鸿洋微信公众号推荐为优质Flutter开源项目啦  已适配null safety
 
 [推荐几个优质Flutter 开源项目](https://mp.weixin.qq.com/s/1pIPymEHbRY0qktBuCJALA)
 

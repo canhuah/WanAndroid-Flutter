@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:wanAndroid/constant/app_colors.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/model/article_model.dart';
 import 'package:wanAndroid/pages/article_detail_page.dart';
 import 'package:wanAndroid/pages/login_page.dart';
-import 'package:wanAndroid/util/DataUtils.dart';
-import 'package:wanAndroid/util/StringUtils.dart';
+import 'package:wanAndroid/util/data_utils.dart';
+import 'package:wanAndroid/util/string_utils.dart';
 
 ///个人感觉条目比较复杂的话可以单独拿出来,而且可以复用.可以对比CollectListPage.dart中的item哪个更合理
-class ArticleCell extends StatefulWidget {
+class ArticleItem extends StatefulWidget {
   final ArticleModel articleModel;
 
   //是否来自搜索列表
-  final bool isSearch;
+  final bool? isSearch;
 
-  final bool isFromCollect;
+  final bool? isFromCollect;
 
-  final Function onClickCollect;
+  final Function? onClickCollect;
 
   //搜索列表的id
-  final String id;
+  final String? id;
 
-  ArticleCell(
-      {this.articleModel,
+  ArticleItem(
+      {required this.articleModel,
       this.isSearch = false,
       this.id,
       this.isFromCollect = false,
@@ -31,11 +30,11 @@ class ArticleCell extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _ArticleCellState();
+    return _ArticleItemState();
   }
 }
 
-class _ArticleCellState extends State<ArticleCell> {
+class _ArticleItemState extends State<ArticleItem> {
   void _handleOnItemCollect(itemData) {
     DataUtils.isLogin().then((isLogin) {
       if (!isLogin) {
@@ -55,42 +54,36 @@ class _ArticleCellState extends State<ArticleCell> {
   void _itemClick(ArticleModel articleModel) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return ArticleDetailPage(
-        title: articleModel.title,
-        url: articleModel.link,
+        title: articleModel.title ?? "",
+        url: articleModel.link ?? "",
       );
     }));
   }
 
   //收藏/取消收藏
   void _itemCollect(ArticleModel articleModel) {
-    String url;
-    if (articleModel.collect) {
-      url = Api.UNCOLLECT_ORIGINID;
-    } else {
-      url = Api.COLLECT;
-    }
-    url += '${articleModel.id}/json';
-    HttpUtil.post(url, (data) {
+    ApiManager.instance.articleCollectOrUnCollect(articleModel,successCallback:  () {
       setState(() {
-        articleModel.collect = !articleModel.collect;
+        articleModel.collect = !(articleModel.collect ?? false);
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isCollect = widget.isFromCollect || widget.articleModel.collect;
+    bool isCollect = (widget.isFromCollect ?? false) ||
+        (widget.articleModel.collect ?? false);
 
     String authorTitle;
     String author;
 
     if (widget.articleModel.author == null ||
-        widget.articleModel.author.isEmpty) {
+        widget.articleModel.author!.isEmpty) {
       authorTitle = "分享人: ";
-      author = widget.articleModel.shareUser;
+      author = widget.articleModel.shareUser ?? "";
     } else {
       authorTitle = "作者: ";
-      author = widget.articleModel.author;
+      author = widget.articleModel.author ?? "";
     }
 
     Row row = Row(
@@ -101,7 +94,7 @@ class _ArticleCellState extends State<ArticleCell> {
                 style:
                     TextStyle(color: AppColors.colorTextAuthor, fontSize: 13))),
         Text(
-          widget.articleModel.niceDate,
+          widget.articleModel.niceDate ?? "",
           style: TextStyle(color: AppColors.colorTextAuthor, fontSize: 13),
         )
       ],
@@ -111,7 +104,7 @@ class _ArticleCellState extends State<ArticleCell> {
       children: <Widget>[
         Expanded(
           child: Text.rich(
-            widget.isSearch
+            widget.isSearch ?? false
                 ? StringUtils.getTextSpan(widget.articleModel.title, widget.id)
                 : TextSpan(text: widget.articleModel.title),
             softWrap: true,
@@ -131,7 +124,9 @@ class _ArticleCellState extends State<ArticleCell> {
               color: AppColors.colorCBCBD4,
               borderRadius: BorderRadius.circular(2)),
           child: Text(
-            widget.isSearch ? '' : widget.articleModel.chapterName,
+            (widget.isSearch ?? false)
+                ? ""
+                : widget.articleModel.chapterName ?? "",
             softWrap: true,
             style: TextStyle(color: AppColors.colorTextAuthor, fontSize: 12),
             textAlign: TextAlign.left,
@@ -144,7 +139,7 @@ class _ArticleCellState extends State<ArticleCell> {
           ),
           onTap: () {
             if (widget.onClickCollect != null) {
-              widget.onClickCollect.call();
+              widget.onClickCollect!.call();
               return;
             }
             _handleOnItemCollect(widget.articleModel);

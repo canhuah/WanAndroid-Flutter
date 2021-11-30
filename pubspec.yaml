@@ -1,21 +1,21 @@
 name: wanAndroid
 description: WanAndroid 客户端 Flutter版.
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 dependencies:
 
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.0
-  webview_flutter:  ^1.0.7
-  shared_preferences: ^0.5.10
-  dio: 3.0.10
-  cookie_jar: ^1.0.1
-  dio_cookie_manager: ^1.0.0
-  pull_to_refresh: 1.6.1
-  event_bus: "^1.1.1"
-  http: '>=0.11.3+12'
+  cupertino_icons: ^1.0.2
+  webview_flutter:  ^2.0.10
+  shared_preferences: ^2.0.6
+  dio: 4.0.4
+  dio_cookie_manager: 2.0.0
+  pull_to_refresh: 2.0.0
+  event_bus: 2.0.0
+
+  path_provider: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -27,5 +27,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - images/ic_launcher_round.png
+    - images/
 

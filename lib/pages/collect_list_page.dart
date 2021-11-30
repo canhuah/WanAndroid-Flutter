@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/item/article_item.dart';
 import 'package:wanAndroid/model/article_model.dart';
 import 'package:wanAndroid/pages/login_page.dart';
-import 'package:wanAndroid/util/DataUtils.dart';
+import 'package:wanAndroid/util/data_utils.dart';
 
 //收藏文章界面
 class CollectPage extends StatelessWidget {
@@ -33,8 +32,7 @@ class CollectListPage extends StatefulWidget {
 class CollectListPageState extends State<CollectListPage> {
   int curPage = 0;
 
-  Map<String, String> map = Map();
-  List<ArticleModel> listData = List();
+  List<ArticleModel> listData = [];
   int listTotalSize = 0;
   ScrollController _control = ScrollController();
 
@@ -73,7 +71,7 @@ class CollectListPageState extends State<CollectListPage> {
         //
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: listData.length,
-        itemBuilder: (context, i) => ArticleCell(
+        itemBuilder: (context, i) => ArticleItem(
           articleModel: listData[i],
           isFromCollect: true,
           onClickCollect: () {
@@ -88,29 +86,22 @@ class CollectListPageState extends State<CollectListPage> {
   }
 
   void _getCollectList() {
-    String url = Api.COLLECT_LIST;
-    url += "$curPage/json";
+    ApiManager.instance.getCollectList(curPage,
+        successCallback: (articleListModel) {
+      setState(() {
+        if (curPage == 0) {
+          listData.clear();
+        }
+        curPage++;
 
-    HttpUtil.get(url, (data) {
-      if (data != null) {
-        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
-
-        setState(() {
-          if (curPage == 0) {
-            listData.clear();
-          }
-          curPage++;
-
-          listData.addAll(articleListModel.datas ?? []);
-        });
-      }
-    }, params: map);
+        listData.addAll(articleListModel.datas ?? []);
+      });
+    });
   }
 
-  Future<Null> _pullToRefresh() async {
+  Future<void> _pullToRefresh() async {
     curPage = 0;
     _getCollectList();
-    return null;
   }
 
   void _handleListItemCollect(itemData) {
@@ -132,17 +123,10 @@ class CollectListPageState extends State<CollectListPage> {
 
   //取消收藏
   void _itemUnCollect(ArticleModel articleModel) {
-    String url;
-
-    url = Api.UNCOLLECT_LIST;
-
-    Map<String, String> map = Map();
-    map['originId'] = articleModel.originId.toString();
-    url = url + articleModel.id.toString() + "/json";
-    HttpUtil.post(url, (data) {
+    ApiManager.instance.unCollect(articleModel, successCallback: () {
       setState(() {
         listData.remove(articleModel);
       });
-    }, params: map);
+    });
   }
 }

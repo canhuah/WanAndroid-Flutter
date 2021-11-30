@@ -3,14 +3,11 @@ import 'package:wanAndroid/constant/app_colors.dart';
 
 class StringUtils {
 
-  static TextSpan getTextSpan(String text, String key) {
+  static TextSpan getTextSpan(String? text, String? key) {
     if (text == null || key == null) {
-      return null;
+      return TextSpan(text: "",children: []);
     }
 
-    if (text == null || key == null) {
-      return null;
-    }
 
     String splitString1 = "<em class='highlight'>";
     String splitString2 = "</em>";
@@ -23,7 +20,7 @@ class StringUtils {
 
     List<String> split = textOrigin.split(key);
 
-    List<TextSpan> list = new List<TextSpan>();
+    List<TextSpan> list = [];
 
     for (int i = 0; i < split.length; i++) {
       list.add(new TextSpan(text: split[i]));

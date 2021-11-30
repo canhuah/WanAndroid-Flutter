@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/item/article_item.dart';
 import 'package:wanAndroid/model/article_model.dart';
 
@@ -23,7 +22,7 @@ class SearchListPageState extends State<SearchListPage> {
   int curPage = 0;
 
   Map<String, String> map = Map();
-  List listData = List();
+  List<ArticleModel> listData = [];
   int listTotalSize = 0;
   ScrollController _controller = ScrollController();
 
@@ -51,14 +50,14 @@ class SearchListPageState extends State<SearchListPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (listData == null || listData.isEmpty) {
+    if (listData.isEmpty) {
       return Center(
         child: CircularProgressIndicator(),
       );
     } else {
       Widget listView = ListView.builder(
         itemCount: listData.length,
-        itemBuilder: (context, i) => ArticleCell(
+        itemBuilder: (context, i) => ArticleItem(
             articleModel: listData[i], id: widget.id, isSearch: true),
         controller: _controller,
       );
@@ -68,29 +67,21 @@ class SearchListPageState extends State<SearchListPage> {
   }
 
   void _articleQuery() {
-    String url = Api.ARTICLE_QUERY;
-    url += "$curPage/json";
-    map['k'] = widget.id;
+    ApiManager.instance.queryArticleList(curPage, widget.id,
+        successCallback: (articleListModel) {
+      setState(() {
+        if (curPage == 0) {
+          listData.clear();
+        }
+        curPage++;
 
-    HttpUtil.post(url, (data) {
-      if (data != null) {
-        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
-
-        setState(() {
-          if (curPage == 0) {
-            listData.clear();
-          }
-          curPage++;
-
-          listData.addAll(articleListModel.datas ?? []);
-        });
-      }
-    }, params: map);
+        listData.addAll(articleListModel.datas ?? []);
+      });
+    });
   }
 
-  Future<Null> pullToRefresh() async {
+  Future<void> pullToRefresh() async {
     curPage = 0;
     _articleQuery();
-    return null;
   }
 }

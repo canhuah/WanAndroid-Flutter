@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/http_manager.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/model/article_model.dart';
 
 class ArticleListPage extends StatefulWidget {
   final String id;
@@ -12,20 +11,18 @@ class ArticleListPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return ArticleListPageState();
+    return _ArticleListPageState();
   }
 }
 
-class ArticleListPageState extends State<ArticleListPage>
+class _ArticleListPageState extends State<ArticleListPage>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
-  //  若当前tab切到任意非相邻tab(如:第一个tab切换到第三个)，会报错，请升级flutter版本
   int curPage = 0;
 
   Map<String, String> map = Map();
-  List listData = List();
+  List listData = [];
   int listTotalSize = 0;
   ScrollController _controller = ScrollController();
 
@@ -56,7 +53,7 @@ class ArticleListPageState extends State<ArticleListPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (listData == null || listData.isEmpty) {
+    if (listData.isEmpty) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -64,7 +61,7 @@ class ArticleListPageState extends State<ArticleListPage>
       Widget listView = ListView.builder(
         key: ValueKey(widget.id),
         itemCount: listData.length,
-        itemBuilder: (context, i) => ArticleCell(articleModel: listData[i]),
+        itemBuilder: (context, i) => ArticleItem(articleModel: listData[i]),
         controller: _controller,
       );
 
@@ -73,13 +70,8 @@ class ArticleListPageState extends State<ArticleListPage>
   }
 
   void _getArticleList() async {
-    String param = "$curPage/json";
-
-    dynamic data = await HttpManager.getArticleList(param, {"cid": widget.id});
-
-    if (data != null) {
-      ArticleListModel articleListModel = ArticleListModel.fromJson(data);
-
+    ApiManager.instance.getArticleList(curPage,cid: widget.id,
+        successCallback: (articleListModel) {
       setState(() {
         if (curPage == 0) {
           listData.clear();
@@ -88,12 +80,11 @@ class ArticleListPageState extends State<ArticleListPage>
 
         listData.addAll(articleListModel.datas ?? []);
       });
-    }
+    });
   }
 
-  Future<Null> _pullToRefresh() async {
+  Future<void> _pullToRefresh() async {
     curPage = 0;
     _getArticleList();
-    return null;
   }
 }

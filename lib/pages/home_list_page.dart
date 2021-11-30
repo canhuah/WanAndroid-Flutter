@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/item/article_item.dart';
-import 'package:wanAndroid/model/article_model.dart';
 import 'package:wanAndroid/model/bannel_model.dart';
 import 'package:wanAndroid/widget/slide_view.dart';
 
@@ -16,7 +14,7 @@ class HomeListPage extends StatefulWidget {
 }
 
 class HomeListPageState extends State<HomeListPage> {
-  List listData = List();
+  List listData = [];
 
   int curPage = 0;
   int listTotalSize = 0;
@@ -25,22 +23,24 @@ class HomeListPageState extends State<HomeListPage> {
   TextStyle titleTextStyle = TextStyle(fontSize: 15.0);
   TextStyle subtitleTextStyle = TextStyle(color: Colors.blue, fontSize: 12.0);
 
-  HomeListPageState() {
+  List<BannerModel> banners = [];
+
+  @override
+  void initState() {
+    super.initState();
+
     _controller.addListener(() {
       double maxScroll = _controller.position.maxScrollExtent;
       double pixels = _controller.position.pixels;
 
       if (maxScroll == pixels && listData.length < listTotalSize) {
-        getHomeArticlelist();
+        getHomeArticleList();
       }
     });
-  }
 
-  @override
-  void initState() {
-    super.initState();
+
     getBanner();
-    getHomeArticlelist();
+    getHomeArticleList();
   }
 
   @override
@@ -49,16 +49,15 @@ class HomeListPageState extends State<HomeListPage> {
     super.dispose();
   }
 
-  Future<Null> _pullToRefresh() async {
+  Future<void> _pullToRefresh() async {
     curPage = 0;
     getBanner();
-    getHomeArticlelist();
-    return null;
+    getHomeArticleList();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (listData == null) {
+    if (listData.isEmpty) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -73,54 +72,38 @@ class HomeListPageState extends State<HomeListPage> {
     }
   }
 
-  SlideView _bannerView;
-
   void getBanner() {
-    String bannerUrl = Api.BANNER;
-
-    HttpUtil.get(bannerUrl, (data) {
-      if (data != null) {
-        setState(() {
-          List list = data;
-          List<BannerModel> banners =
-              list.map((e) => BannerModel.fromJson(e)).toList();
-          _bannerView = SlideView(banners);
-        });
-      }
+    ApiManager.instance.getBanner(successCallback: (banners) {
+      setState(() {
+        this.banners = banners;
+      });
     });
   }
 
-  void getHomeArticlelist() {
-    String url = Api.ARTICLE_LIST;
-    url += "$curPage/json";
+  void getHomeArticleList() {
+    ApiManager.instance.getArticleList(curPage,
+        successCallback: (articleListModel) {
+      setState(() {
+        if (curPage == 0) {
+          listData.clear();
+        }
+        curPage++;
 
-    HttpUtil.get(url, (data) {
-      if (data != null) {
-        ArticleListModel articleListModel = ArticleListModel.fromJson(data);
-
-        setState(() {
-          if (curPage == 0) {
-            listData.clear();
-          }
-          curPage++;
-
-          listData.addAll(articleListModel.datas ?? []);
-        });
-      }
+        listData.addAll(articleListModel.datas ?? []);
+      });
     });
   }
 
   Widget buildItem(int i) {
     if (i == 0) {
       return Container(
-        height: 180.0,
-        child: _bannerView,
+        height: MediaQuery.of(context).size.width*5/9,
+        child: SlideView(banners),
       );
     }
-    i -= 1;
 
-    return ArticleCell(
-      articleModel: listData[i],
+    return ArticleItem(
+      articleModel: listData[i - 1],
     );
   }
 }

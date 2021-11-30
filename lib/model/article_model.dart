@@ -1,16 +1,17 @@
-//https://jsontodart.com 生成
+import 'as_t.dart';
+
 class ArticleListModel {
-  int curPage;
-  List<ArticleModel> datas;
+  int? curPage;
+  List<ArticleModel>? datas;
 
   ArticleListModel({this.curPage, this.datas});
 
   ArticleListModel.fromJson(Map<String, dynamic> json) {
     curPage = json['curPage'];
     if (json['datas'] != null) {
-      datas = new List<ArticleModel>();
+      datas = [];
       json['datas'].forEach((v) {
-        datas.add(new ArticleModel.fromJson(v));
+        datas!.add(ArticleModel.fromJson(v));
       });
     }
   }
@@ -19,47 +20,47 @@ class ArticleListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['curPage'] = this.curPage;
     if (this.datas != null) {
-      data['datas'] = this.datas.map((v) => v.toJson()).toList();
+      data['datas'] = this.datas!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ArticleModel {
-  String apkLink;
-  int audit;
-  String author;
-  bool canEdit;
-  int chapterId;
-  String chapterName;
-  bool collect;
-  int courseId;
-  String desc;
-  String descMd;
-  String envelopePic;
-  bool fresh;
-  String host;
-  int id;
-  int originId;
-  String link;
-  String niceDate;
-  String niceShareDate;
-  String origin;
-  String prefix;
-  String projectLink;
-  int publishTime;
-  int realSuperChapterId;
-  int selfVisible;
-  int shareDate;
-  String shareUser;
-  int superChapterId;
-  String superChapterName;
+  String? apkLink;
+  int? audit;
+  String? author;
+  bool? canEdit;
+  int? chapterId;
+  String? chapterName;
+  bool? collect;
+  int? courseId;
+  String? desc;
+  String? descMd;
+  String? envelopePic;
+  bool? fresh;
+  String? host;
+  int? id;
+  int? originId;
+  String? link;
+  String? niceDate;
+  String? niceShareDate;
+  String? origin;
+  String? prefix;
+  String? projectLink;
+  int? publishTime;
+  int? realSuperChapterId;
+  int? selfVisible;
+  int? shareDate;
+  String? shareUser;
+  int? superChapterId;
+  String? superChapterName;
 
-  String title;
-  int type;
-  int userId;
-  int visible;
-  int zan;
+  String? title;
+  int? type;
+  int? userId;
+  int? visible;
+  int? zan;
 
   ArticleModel(
       {this.apkLink,
@@ -97,44 +98,44 @@ class ArticleModel {
       this.zan});
 
   ArticleModel.fromJson(Map<String, dynamic> json) {
-    apkLink = json['apkLink'];
-    audit = json['audit'];
-    author = json['author'];
-    canEdit = json['canEdit'];
-    chapterId = json['chapterId'];
-    chapterName = json['chapterName'];
-    collect = json['collect'];
-    courseId = json['courseId'];
-    desc = json['desc'];
-    descMd = json['descMd'];
-    envelopePic = json['envelopePic'];
-    fresh = json['fresh'];
-    host = json['host'];
-    id = json['id'];
-    originId = json['originId'];
-    link = json['link'];
-    niceDate = json['niceDate'];
-    niceShareDate = json['niceShareDate'];
-    origin = json['origin'];
-    prefix = json['prefix'];
-    projectLink = json['projectLink'];
-    publishTime = json['publishTime'];
-    realSuperChapterId = json['realSuperChapterId'];
-    selfVisible = json['selfVisible'];
-    shareDate = json['shareDate'];
-    shareUser = json['shareUser'];
-    superChapterId = json['superChapterId'];
-    superChapterName = json['superChapterName'];
+    apkLink = asT<String?>(json['apkLink']);
+    audit = asT<int?>(json['audit']);
+    author = asT<String?>(json['author']);
+    canEdit = asT<bool?>(json['canEdit']);
+    chapterId = asT<int?>(json['chapterId']);
+    chapterName = asT<String?>(json['chapterName']);
+    collect = asT<bool?>(json['collect']);
+    courseId = asT<int?>(json['courseId']);
+    desc = asT<String?>(json['desc']);
+    descMd = asT<String?>(json['descMd']);
+    envelopePic = asT<String?>(json['envelopePic']);
+    fresh = asT<bool?>(json['fresh']);
+    host = asT<String?>(json['host']);
+    id = asT<int?>(json['id']);
+    originId = asT<int?>(json['originId']);
+    link = asT<String?>(json['link']);
+    niceDate = asT<String?>(json['niceDate']);
+    niceShareDate = asT<String?>(json['niceShareDate']);
+    origin = asT<String?>(json['origin']);
+    prefix = asT<String?>(json['prefix']);
+    projectLink = asT<String?>(json['projectLink']);
+    publishTime = asT<int?>(json['publishTime']);
+    realSuperChapterId = asT<int?>(json['realSuperChapterId']);
+    selfVisible = asT<int?>(json['selfVisible']);
+    shareDate = asT<int>(json['shareDate']);
+    shareUser = asT<String?>(json['shareUser']);
+    superChapterId = asT<int?>(json['superChapterId']);
+    superChapterName = asT<String?>(json['superChapterName']);
 
-    title = json['title'];
-    type = json['type'];
-    userId = json['userId'];
-    visible = json['visible'];
-    zan = json['zan'];
+    title = asT<String?>(json['title']);
+    type = asT<int?>(json['type']);
+    userId = asT<int?>(json['userId']);
+    visible = asT<int?>(json['visible']);
+    zan = asT<int?>(json['zan']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = {};
     data['apkLink'] = this.apkLink;
     data['audit'] = this.audit;
     data['author'] = this.author;

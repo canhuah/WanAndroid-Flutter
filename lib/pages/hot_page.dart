@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/model/friend_model.dart';
 import 'package:wanAndroid/model/hot_key_model.dart';
 import 'package:wanAndroid/pages/article_detail_page.dart';
@@ -9,19 +8,19 @@ import 'package:wanAndroid/pages/search_page.dart';
 class HotPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return HotPageState();
+    return _HotPageState();
   }
 }
 
-class HotPageState extends State<HotPage> {
-  List<Widget> hotKeyWidgets = List();
-  List<Widget> friendWidgets = List();
+class _HotPageState extends State<HotPage> {
+  List<FriendModel> friends = [];
+  List<HotKeyModel> hotKeys = [];
 
   @override
   void initState() {
     super.initState();
-    _getFriend();
-    _getHotKey();
+    _getFriendList();
+    _getHotKeyList();
   }
 
   @override
@@ -36,7 +35,17 @@ class HotPageState extends State<HotPage> {
         Wrap(
           spacing: 5.0,
           runSpacing: 1.0,
-          children: hotKeyWidgets,
+          children: hotKeys
+              .map((hotKeyModel) => HotKeyCell(
+                    text: hotKeyModel.name ?? "",
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) {
+                        return SearchPage(searchStr: hotKeyModel.name ?? "");
+                      }));
+                    },
+                  ))
+              .toList(),
         ),
         Padding(
             padding: EdgeInsets.all(8.0),
@@ -46,60 +55,36 @@ class HotPageState extends State<HotPage> {
         Wrap(
           spacing: 5.0,
           runSpacing: 1.0,
-          children: friendWidgets,
+          children: friends
+              .map((friendModel) => HotKeyCell(
+                    text: friendModel.name ?? "",
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return ArticleDetailPage(
+                            title: friendModel.name ?? "",
+                            url: friendModel.link ?? "");
+                      }));
+                    },
+                  ))
+              .toList(),
         ),
       ],
     );
   }
 
-  void _getFriend() {
-    HttpUtil.get(Api.FRIEND, (data) {
+  void _getFriendList() {
+    ApiManager.instance.getFriendList(successCallback: (friendList) {
       setState(() {
-        List list = data;
-
-        List<FriendModel> friends =
-            list.map((e) => FriendModel.fromJson(e)).toList();
-
-        hotKeyWidgets.clear();
-        for (FriendModel friendModel in friends) {
-          Widget actionChip = HotKeyCell(
-            text: friendModel.name,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return ArticleDetailPage(
-                    title: friendModel.name, url: friendModel.link);
-              }));
-            },
-          );
-
-          hotKeyWidgets.add(actionChip);
-        }
+        friends = friendList;
       });
     });
   }
 
-  void _getHotKey() {
-    HttpUtil.get(Api.HOTKEY, (data) {
+  void _getHotKeyList() {
+    ApiManager.instance.getHotKeyList(successCallback: (hotKeyList) {
       setState(() {
-        List list = data;
-
-        List<HotKeyModel> hotKeys =
-            list.map((e) => HotKeyModel.fromJson(e)).toList();
-
-        hotKeyWidgets.clear();
-        for (HotKeyModel hotKeyModel in hotKeys) {
-          Widget actionChip = HotKeyCell(
-            text: hotKeyModel.name,
-            onPressed: () {
-              Navigator.of(context)
-                  .pushReplacement(MaterialPageRoute(builder: (context) {
-                return SearchPage(hotKeyModel.name);
-              }));
-            },
-          );
-
-          hotKeyWidgets.add(actionChip);
-        }
+        hotKeys = hotKeyList;
       });
     });
   }
@@ -110,14 +95,15 @@ class HotKeyCell extends StatelessWidget {
 
   final VoidCallback onPressed;
 
-  const HotKeyCell({Key key, this.text, this.onPressed}) : super(key: key);
+  const HotKeyCell({Key? key, required this.text, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ActionChip(
         backgroundColor: Theme.of(context).primaryColor,
         label: Text(
-          text ?? "",
+          text,
           style: TextStyle(color: Colors.white, fontSize: 14),
         ),
         onPressed: onPressed);

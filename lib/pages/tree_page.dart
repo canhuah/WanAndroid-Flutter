@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wanAndroid/http/api.dart';
-import 'package:wanAndroid/http/http_util_with_cookie.dart';
+import 'package:wanAndroid/http/api_manager.dart';
 import 'package:wanAndroid/model/tree_model.dart';
 import 'package:wanAndroid/pages/articles_page.dart';
 
@@ -13,7 +12,7 @@ class TreePage extends StatefulWidget {
 }
 
 class TreePageState extends State<TreePage> {
-  List<TreeModel> treeList;
+  List<TreeModel>? treeList;
 
   @override
   void initState() {
@@ -29,8 +28,8 @@ class TreePageState extends State<TreePage> {
       );
     } else {
       Widget listView = ListView.builder(
-        itemCount: treeList.length,
-        itemBuilder: (context, i) => TreeCell(treeModel: treeList[i]),
+        itemCount: treeList!.length,
+        itemBuilder: (context, i) => TreeCell(treeModel: treeList![i]),
       );
 
       return listView;
@@ -38,14 +37,11 @@ class TreePageState extends State<TreePage> {
   }
 
   _getTree() async {
-    HttpUtil.get(Api.TREE, (data) {
-      List list = data;
 
-      treeList = list.map((element) {
-        return TreeModel.fromJson(element);
-      }).toList();
-
-      setState(() {});
+    ApiManager.instance.getTreeList(successCallback: (trees){
+      setState(() {
+        treeList = trees;
+      });
     });
   }
 }
@@ -53,7 +49,7 @@ class TreePageState extends State<TreePage> {
 class TreeCell extends StatelessWidget {
   final TreeModel treeModel;
 
-  const TreeCell({Key key, this.treeModel}) : super(key: key);
+  const TreeCell({Key? key,required this.treeModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
