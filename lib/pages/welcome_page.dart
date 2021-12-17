@@ -23,7 +23,7 @@ class _WelcomePageState extends State<WelcomePage> {
       await ApiManager.instance.initClient();
 
       Future.delayed(Duration(milliseconds: 1000), () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
           return HomePage();
         }));
       });
